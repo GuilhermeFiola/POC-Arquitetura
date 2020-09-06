@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Normas.WebAPI.DTO.Normas;
+using Normas.WebAPI.UseCases.Normas;
 
 namespace Normas.WebAPI.Controllers
 {
@@ -11,31 +9,39 @@ namespace Normas.WebAPI.Controllers
     [ApiController]
     public class NormasController : ControllerBase
     {
-        private readonly INormasService _normasService;
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> GetNorma([FromServices] AdicionarNormaUseCase _casoUso,
+        //                                          [FromRoute] int idNorma)
+        //{
+        //    return await _casoUso.Adicionar(adicionarNormaDTO);
+        //}
 
-        public NormasController(IUsuarioService normasService)
-        {
-            _normasService = normasService;
-        }
+        //[HttpGet()]
+        //public async Task<IActionResult> GetNormas([FromServices] AdicionarNormaUseCase _casoUso)
+        //{
+        //    return await _casoUso.Adicionar(adicionarNormaDTO);
+        //}
 
-        [HttpGet("{idNorma}")]
-        public IActionResult GetNorma(int idNorma)
-        {
-            var response = _normasService.Autenticar(authRequestDTO);
-
-            if (response == null) return Unauthorized(new { message = "Usuário ou senha incorretos." });
-
-            return Ok(response);
-        }
 
         [HttpPost()]
-        public IActionResult PostNorma(AdicionarNormaRequestDTO adicionarNormaDTO)
+        public async Task<IActionResult> PostNorma([FromServices]AdicionarNormaUseCase _casoUso,
+                                                   [FromForm] AdicionarNormaRequestDTO adicionarNormaDTO)
         {
-            var response = _normasService.Autenticar(authRequestDTO);
+            return await _casoUso.Adicionar(adicionarNormaDTO);
+        }
 
-            if (response == null) return Unauthorized(new { message = "Usuário ou senha incorretos." });
+        //[HttpPut()]
+        //public async Task<IActionResult> PutNorma([FromServices] AdicionarNormaUseCase _casoUso,
+        //                                          [FromForm] AdicionarNormaRequestDTO adicionarNormaDTO)
+        //{
+        //    return await _casoUso.Adicionar(adicionarNormaDTO);
+        //}
 
-            return Ok(response);
+        [HttpDelete("{idNorma}")]
+        public async Task<IActionResult> DeleteNorma([FromServices] ExcluirNormaUseCase _casoUso,
+                                                     [FromRoute] int idNorma)
+        {
+            return await _casoUso.Excluir(idNorma);
         }
 
     }

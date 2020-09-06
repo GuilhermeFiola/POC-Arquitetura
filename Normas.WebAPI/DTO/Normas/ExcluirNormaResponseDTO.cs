@@ -2,7 +2,7 @@
 
 namespace Normas.WebAPI.DTO.Normas
 {
-    public class AdicionarNormaResponseDTO
+    public class ExcluirNormaResponseDTO
     {
         public int Id { get; set; }
         public string Descricao { get; set; }

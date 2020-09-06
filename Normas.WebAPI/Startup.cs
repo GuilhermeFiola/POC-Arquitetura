@@ -7,6 +7,11 @@ using Normas.WebAPI.Interfaces.Repositories;
 using Normas.WebAPI.Interfaces.Services;
 using Normas.WebAPI.Repositories;
 using Normas.WebAPI.Services;
+using AutoMapper;
+using Normas.WebAPI.Helpers;
+using Normas.WebAPI.UseCases.Normas;
+using Normas.WebAPI.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Normas.WebAPI
 {
@@ -25,16 +30,46 @@ namespace Normas.WebAPI
             services.AddCors();
             services.AddControllers();
 
+            #region SQLite
+            var connection = Configuration["ConexaoSqlite:SqliteConnectionString"];
+            services.AddDbContext<ApiContext>(options =>
+                options.UseSqlite(connection)
+            );
+            #endregion
+
+            #region DI Repositórios
             services.AddScoped<INormaRepository, NormaRepository>();
             services.AddScoped<IOrgaoExpedidorRepository, OrgaoExpedidorRepository>();
             services.AddScoped<ITipoDocumentoRepository, TipoDocumentoRepository>();
-            
-            services.AddScoped<INormaService, NormaService>();
+            #endregion
 
+            #region DI Serviços
+            services.AddScoped<INormaService, NormaService>();
+            services.AddScoped<ITipoDocumentoService, TipoDocumentoService>();
+            services.AddScoped<IOrgaoExpedidorService, OrgaoExpedidorService>();
+            #endregion
+
+            #region DI Use Cases
+            services.AddScoped<AdicionarNormaUseCase>();
+            services.AddScoped<ExcluirNormaUseCase>();
+            #endregion
+
+            #region DI Mappers
+            var mapperConfig = new MapperConfiguration(config =>
+            {
+                config.AddProfile(new MapperProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            #endregion
+
+            #region Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Normas API", Version = "v1" });
             });
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -21,7 +21,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonitoramentoNormas", "Moni
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExternoNormas", "ExternoNormas", "{FE7FA9BC-AB43-4343-BF1C-BC0961F1D2E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoramento.Worker", "Monitoramento.Worker\Monitoramento.Worker.csproj", "{CC043B7E-56A9-4305-A340-353AFB06DC89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Monitoramento.Worker", "Monitoramento.Worker\Monitoramento.Worker.csproj", "{CC043B7E-56A9-4305-A340-353AFB06DC89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4F5DB77A-3647-4E57-987A-AF6410181734}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

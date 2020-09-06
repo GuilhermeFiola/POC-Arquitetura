@@ -1,4 +1,5 @@
-﻿using Normas.WebAPI.Entities;
+﻿using Normas.WebAPI.Data;
+using Normas.WebAPI.Entities;
 using Normas.WebAPI.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,27 +8,28 @@ namespace Normas.WebAPI.Repositories
 {
     public class NormaRepository : INormaRepository
     {
-        IEnumerable<Norma> _normas;
+        private readonly ApiContext _context;
 
-        public NormaRepository()
+        public NormaRepository(ApiContext context)
         {
-            _normas = new List<Norma>();
+            _context = context;
         }
 
         public IEnumerable<Norma> GetAll()
         {
-            return _normas;
+            return _context.Normas;
         }
 
         public Norma GetById(int id)
         {
-            return _normas.FirstOrDefault(w => w.Id == id);
+            return _context.Normas.FirstOrDefault(w => w.Id == id);
         }
 
         public Norma Insert(Norma norma)
         {
-            norma.Id = _normas.ToList().Max(m => m.Id);
-            _normas.ToList().Add(norma);
+            _context.Normas.Add(norma);
+            _context.SaveChanges();
+
             return norma;
         }
 
@@ -46,7 +48,9 @@ namespace Normas.WebAPI.Repositories
         {
             var normaLista = GetById(id);
             if (normaLista == null) return null;
-            _normas.ToList().Remove(normaLista);
+            _context.Normas.Remove(normaLista);
+            _context.SaveChanges();
+
             return normaLista;
         }
     }
