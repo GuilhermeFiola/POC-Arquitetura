@@ -43,5 +43,12 @@ namespace Normas.WebAPI.Controllers
             return await _casoUso.Excluir(idNorma);
         }
 
+        [HttpPost("importar")]
+        public async Task<IActionResult> PostImportar([FromServices] ImportarNormaUseCase _casoUso,
+                                                      [FromBody] ImportarNormaRequestDTO importarNormaDTO)
+        {
+            return await _casoUso.Importar(importarNormaDTO);
+        }
+
     }
 }

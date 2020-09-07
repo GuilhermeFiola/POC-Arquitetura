@@ -55,6 +55,7 @@ namespace Normas.WebAPI
             services.AddScoped<AdicionarNormaUseCase>();
             services.AddScoped<AtualizaNormaUseCase>();
             services.AddScoped<ExcluirNormaUseCase>();
+            services.AddScoped<ImportarNormaUseCase>();
             #endregion
 
             #region DI Mappers

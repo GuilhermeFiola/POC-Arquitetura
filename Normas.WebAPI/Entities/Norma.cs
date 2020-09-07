@@ -5,6 +5,7 @@ namespace Normas.WebAPI.Entities
     public class Norma
     {
         public int Id { get; set; }
+        public string CodigoNorma { get; set; }
         public string Descricao { get; set; }
         public int IdTipoDocumento { get; set; }
         public int IdOrgaoExpedidor { get; set; }

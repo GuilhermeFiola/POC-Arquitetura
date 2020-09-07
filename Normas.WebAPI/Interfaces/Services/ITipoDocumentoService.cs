@@ -1,7 +1,9 @@
-﻿namespace Normas.WebAPI.Interfaces.Services
+﻿using Normas.WebAPI.Entities;
+
+namespace Normas.WebAPI.Interfaces.Services
 {
     public interface ITipoDocumentoService
     {
-        int BuscarTipoDocumentoPorDescricao(string descricaoDocumento);
+        TipoDocumento BuscarTipoDocumentoPorDescricao(string descricaoDocumento);
     }
 }

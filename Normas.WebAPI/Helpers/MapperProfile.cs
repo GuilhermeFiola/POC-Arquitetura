@@ -27,6 +27,12 @@ namespace Normas.WebAPI.Helpers
             CreateMap<Norma, AtualizarNormaResponseDTO>();
 
             CreateMap<Norma, ExcluirNormaResponseDTO>();
+
+            CreateMap<ImportarNormaRequestDTO, Norma>()
+                .ForMember(dest => dest.TipoDocumento, opt => opt.Ignore())
+                .ForMember(dest => dest.OrgaoExpedicao, opt => opt.Ignore());
+
+            CreateMap<Norma, ImportarNormaResponseDTO>();
         }
     }
 }

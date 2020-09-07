@@ -1,7 +1,9 @@
-﻿namespace Normas.WebAPI.Interfaces.Services
+﻿using Normas.WebAPI.Entities;
+
+namespace Normas.WebAPI.Interfaces.Services
 {
     public interface IOrgaoExpedidorService
     {
-        int BuscarOrgaoExpedidorPorDescricao(string descricaoOrgao);
+        OrgaoExpedidor BuscarOrgaoExpedidorPorDescricao(string descricaoOrgao);
     }
 }

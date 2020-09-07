@@ -12,8 +12,13 @@ namespace Normas.WebAPI.Data.Mappings
 
             builder.HasKey(k => k.Id);
 
+            builder.HasIndex(u => u.CodigoNorma).IsUnique();
+
             builder.Property(p => p.Id)
                    .ValueGeneratedOnAdd()
+                   .IsRequired();
+
+            builder.Property(p => p.CodigoNorma)
                    .IsRequired();
 
             builder.Property(p => p.Descricao)

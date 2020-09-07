@@ -9,6 +9,8 @@ namespace Normas.WebAPI.DTO.Normas
         [Required]
         public int Id { get; set; }
         [Required]
+        public string CodigoNorma { get; set; }
+        [Required]
         public string Descricao { get; set; }
         [Required]
         public int TipoDocumento { get; set; }

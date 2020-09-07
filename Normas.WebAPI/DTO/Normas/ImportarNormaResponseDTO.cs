@@ -3,7 +3,7 @@ using System;
 
 namespace Normas.WebAPI.DTO.Normas
 {
-    public class AdicionarNormaResponseDTO
+    public class ImportarNormaResponseDTO
     {
         public int Id { get; set; }
         public string CodigoNorma { get; set; }

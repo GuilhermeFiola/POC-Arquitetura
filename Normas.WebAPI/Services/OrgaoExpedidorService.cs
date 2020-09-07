@@ -1,4 +1,5 @@
-﻿using Normas.WebAPI.Interfaces.Repositories;
+﻿using Normas.WebAPI.Entities;
+using Normas.WebAPI.Interfaces.Repositories;
 using Normas.WebAPI.Interfaces.Services;
 using System;
 using System.Linq;
@@ -13,11 +14,11 @@ namespace Normas.WebAPI.Services
             _orgaoExpedidorRepository = orgaoExpedidorRepository;
         }
 
-        public int BuscarOrgaoExpedidorPorDescricao(string descricaoOrgao)
+        public OrgaoExpedidor BuscarOrgaoExpedidorPorDescricao(string descricaoOrgao)
         {
             try
             {
-                return _orgaoExpedidorRepository.GetAll().FirstOrDefault(w => w.Descricao.Contains(descricaoOrgao)).Id;
+                return _orgaoExpedidorRepository.GetAll().FirstOrDefault(w => w.Descricao.Contains(descricaoOrgao));
             }
             catch(Exception ex)
             {
