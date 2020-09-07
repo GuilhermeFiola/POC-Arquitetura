@@ -7,6 +7,6 @@ namespace Normas.WebAPI.Interfaces.Services
     {
         Task<string> GravarArquivoNormaAsync(IFormFile arquivoNormas);
 
-        void ExcluiArquivoNormaAsync(string localArquivoNormas);
+        void ExcluiArquivoNorma(string localArquivoNormas);
     }
 }

@@ -37,7 +37,7 @@ namespace Normas.WebAPI.UseCases.Normas
 
                 if (norma == null) return new NotFoundObjectResult("Norma não localizada.");
 
-                _normaService.ExcluiArquivoNormaAsync(norma.LocalArquivoNorma);
+                _normaService.ExcluiArquivoNorma(norma.LocalArquivoNorma);
 
                 norma.TipoDocumento = _tipoDocumentoRepository.GetById(norma.IdTipoDocumento);
                 norma.OrgaoExpedicao = _orgaoExpedidorRepository.GetById(norma.IdOrgaoExpedidor);

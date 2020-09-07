@@ -36,14 +36,10 @@ namespace Normas.WebAPI.UseCases.Normas
             {
                 var localArquivoNorma = await _normaService.GravarArquivoNormaAsync(adicionarNormaDTO.ArquivoNorma);
 
-                var tipoDocumento = _tipoDocumentoRepository.GetById(adicionarNormaDTO.TipoDocumento);
-
-                var orgaoExpedidor = _orgaoExpedidorRepository.GetById(adicionarNormaDTO.OrgaoExpedicao);
-
                 var norma = _mapper.Map<Norma>(adicionarNormaDTO);
 
-                norma.TipoDocumento = tipoDocumento;
-                norma.OrgaoExpedicao = orgaoExpedidor;
+                norma.TipoDocumento = _tipoDocumentoRepository.GetById(norma.IdTipoDocumento);
+                norma.OrgaoExpedicao = _orgaoExpedidorRepository.GetById(norma.IdOrgaoExpedidor);
                 norma.LocalArquivoNorma = localArquivoNorma;
 
                 var normaResponse = _mapper.Map<AdicionarNormaResponseDTO>(_normaRepository.Insert(norma));

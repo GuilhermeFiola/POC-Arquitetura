@@ -50,7 +50,10 @@ namespace Normas.WebAPI
             #endregion
 
             #region DI Use Cases
+            services.AddScoped<BuscarNormaUseCase>();
+            services.AddScoped<BuscarListaNormaUseCase>();
             services.AddScoped<AdicionarNormaUseCase>();
+            services.AddScoped<AtualizaNormaUseCase>();
             services.AddScoped<ExcluirNormaUseCase>();
             #endregion
 

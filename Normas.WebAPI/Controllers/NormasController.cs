@@ -9,19 +9,18 @@ namespace Normas.WebAPI.Controllers
     [ApiController]
     public class NormasController : ControllerBase
     {
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetNorma([FromServices] AdicionarNormaUseCase _casoUso,
-        //                                          [FromRoute] int idNorma)
-        //{
-        //    return await _casoUso.Adicionar(adicionarNormaDTO);
-        //}
+        [HttpGet("{idNorma}")]
+        public async Task<IActionResult> GetNorma([FromServices] BuscarNormaUseCase _casoUso,
+                                                  [FromRoute] int idNorma)
+        {
+            return await _casoUso.Buscar(idNorma);
+        }
 
-        //[HttpGet()]
-        //public async Task<IActionResult> GetNormas([FromServices] AdicionarNormaUseCase _casoUso)
-        //{
-        //    return await _casoUso.Adicionar(adicionarNormaDTO);
-        //}
-
+        [HttpGet()]
+        public async Task<IActionResult> GetNormas([FromServices] BuscarListaNormaUseCase _casoUso)
+        {
+            return await _casoUso.Buscar();
+        }
 
         [HttpPost()]
         public async Task<IActionResult> PostNorma([FromServices]AdicionarNormaUseCase _casoUso,
@@ -30,12 +29,12 @@ namespace Normas.WebAPI.Controllers
             return await _casoUso.Adicionar(adicionarNormaDTO);
         }
 
-        //[HttpPut()]
-        //public async Task<IActionResult> PutNorma([FromServices] AdicionarNormaUseCase _casoUso,
-        //                                          [FromForm] AdicionarNormaRequestDTO adicionarNormaDTO)
-        //{
-        //    return await _casoUso.Adicionar(adicionarNormaDTO);
-        //}
+        [HttpPut()]
+        public async Task<IActionResult> PutNorma([FromServices] AtualizaNormaUseCase _casoUso,
+                                                  [FromForm] AtualizarNormaRequestDTO atualizarNormaDTO)
+        {
+            return await _casoUso.Atualizar(atualizarNormaDTO);
+        }
 
         [HttpDelete("{idNorma}")]
         public async Task<IActionResult> DeleteNorma([FromServices] ExcluirNormaUseCase _casoUso,

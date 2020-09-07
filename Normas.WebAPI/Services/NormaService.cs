@@ -20,7 +20,9 @@ namespace Normas.WebAPI.Services
         {
             try
             {
-                var caminhoArquivo = this._hostEnvironment.WebRootPath + "\\Docs\\" + Guid.NewGuid() + ".pdf";
+                var nomeArquivo = Guid.NewGuid().ToString();
+                
+                var caminhoArquivo = _hostEnvironment.WebRootPath + "\\Docs\\" + nomeArquivo + ".pdf";
 
                 if (arquivoNormas.Length > 0)
                 {
@@ -39,7 +41,7 @@ namespace Normas.WebAPI.Services
             
         }
 
-        public void ExcluiArquivoNormaAsync(string localArquivoNormas)
+        public void ExcluiArquivoNorma(string localArquivoNormas)
         {
             try
             {
