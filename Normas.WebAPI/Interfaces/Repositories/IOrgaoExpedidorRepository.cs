@@ -8,11 +8,5 @@ namespace Normas.WebAPI.Interfaces.Repositories
         IEnumerable<OrgaoExpedidor> GetAll();
 
         OrgaoExpedidor GetById(int id);
-
-        OrgaoExpedidor Insert(OrgaoExpedidor orgao);
-
-        OrgaoExpedidor Update(OrgaoExpedidor orgao);
-
-        OrgaoExpedidor Delete(int id);
     }
 }

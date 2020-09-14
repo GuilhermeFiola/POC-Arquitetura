@@ -1,4 +1,5 @@
-﻿using Normas.WebAPI.Entities;
+﻿using Normas.WebAPI.Data;
+using Normas.WebAPI.Entities;
 using Normas.WebAPI.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,30 +8,21 @@ namespace Normas.WebAPI.Repositories
 {
     public class TipoDocumentoRepository : ITipoDocumentoRepository
     {
-        IEnumerable<TipoDocumento> _tipoDocumentos;
+        private readonly ApiContext _context;
 
-        public TipoDocumentoRepository()
+        public TipoDocumentoRepository(ApiContext context)
         {
-            _tipoDocumentos = new List<TipoDocumento>()
-            {
-                new TipoDocumento() { Id = 0, Descricao = "Indefinido"},
-                new TipoDocumento() { Id = 1, Descricao = "Norma de Base"},
-                new TipoDocumento() { Id = 2, Descricao = "Norma de Terminologia"},
-                new TipoDocumento() { Id = 3, Descricao = "Norma de Ensaio"},
-                new TipoDocumento() { Id = 4, Descricao = "Norma de Produto"},
-                new TipoDocumento() { Id = 5, Descricao = "Norma de Processo"},
-                new TipoDocumento() { Id = 6, Descricao = "Norma de Serviço"},
-            };
+            _context = context;
         }
 
         public IEnumerable<TipoDocumento> GetAll()
         {
-            return _tipoDocumentos;
+            return _context.TiposDocumento;
         }
 
         public TipoDocumento GetById(int id)
         {
-            return _tipoDocumentos.FirstOrDefault(w => w.Id == id);
+            return _context.TiposDocumento.FirstOrDefault(w => w.Id == id);
 
         }
     }

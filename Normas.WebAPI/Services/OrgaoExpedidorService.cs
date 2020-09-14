@@ -18,7 +18,7 @@ namespace Normas.WebAPI.Services
         {
             try
             {
-                return _orgaoExpedidorRepository.GetAll().FirstOrDefault(w => w.Descricao.Contains(descricaoOrgao));
+                return _orgaoExpedidorRepository.GetAll().First(w => w.Descricao.Contains(descricaoOrgao));
             }
             catch(Exception ex)
             {

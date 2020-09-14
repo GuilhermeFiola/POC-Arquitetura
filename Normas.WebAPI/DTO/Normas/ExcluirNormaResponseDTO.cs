@@ -9,7 +9,7 @@ namespace Normas.WebAPI.DTO.Normas
         public string CodigoNorma { get; set; }
         public string Descricao { get; set; }
         public TipoDocumento TipoDocumento { get; set; }
-        public OrgaoExpedidor OrgaoExpedicao { get; set; }
+        public OrgaoExpedidor OrgaoExpedidor { get; set; }
         public DateTime DataPublicacao { get; set; }
         public string Resumo { get; set; }
         public string Observacao { get; set; }

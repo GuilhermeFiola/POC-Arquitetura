@@ -40,12 +40,16 @@ namespace Normas.WebAPI.Data.Mappings
             builder.Property(p => p.Resumo)
                    .HasMaxLength(250);
 
-            builder.Property(p => p.LocalArquivoNorma)
+            builder.Property(p => p.LocalArquivoNormas)
                    .IsRequired();
 
-            builder.Ignore(i => i.TipoDocumento);
+            builder.HasOne(f => f.TipoDocumento)
+                   .WithMany(f => f.Normas)
+                   .HasForeignKey(f => f.IdTipoDocumento);
 
-            builder.Ignore(i => i.OrgaoExpedicao);
+            builder.HasOne(f => f.OrgaoExpedidor)
+                   .WithMany(f => f.Normas)
+                   .HasForeignKey(f => f.IdOrgaoExpedidor);
         }
     }
 }

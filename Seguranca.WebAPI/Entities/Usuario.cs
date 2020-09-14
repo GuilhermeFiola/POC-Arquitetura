@@ -8,7 +8,8 @@ namespace Seguranca.WebAPI.Entitites
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
         public string Login { get; set; }
-        
+        public string Papel { get; set; }
+
         [JsonIgnore]
         public string Senha { get; set; }
     }

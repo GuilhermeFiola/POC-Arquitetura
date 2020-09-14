@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using Seguranca.WebAPI.Helpers;
 using Seguranca.WebAPI.Entitites;
 using System;
@@ -16,16 +15,9 @@ namespace Seguranca.WebAPI.Services
     {
         private List<Usuario> _usuarios = new List<Usuario>
         {
-            new Usuario { Id = 1, Nome = "João", Sobrenome = "Pedro", Login = "usuario", Senha = "usuario" },
-            new Usuario { Id = 1, Nome = "Maria", Sobrenome = "Lima", Login = "analistaqa", Senha = "qa" }
+            new Usuario { Id = 1, Nome = "João", Sobrenome = "Pedro", Papel = "Usuario", Login = "usuario", Senha = "usuario" },
+            new Usuario { Id = 1, Nome = "Maria", Sobrenome = "Lima", Papel = "Analista", Login = "analistaqa", Senha = "qa" }
         };
-
-        private readonly AppSettings _appSettings;
-
-        public UsuarioService(IOptions<AppSettings> appSettings)
-        {
-            _appSettings = appSettings.Value;
-        }
 
         public AuthResponseDTO Autenticar(AuthRequestDTO authRequestDTO)
         {
@@ -41,10 +33,13 @@ namespace Seguranca.WebAPI.Services
         private string GerarTokenJwt(Usuario user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var chave = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var chave = Encoding.ASCII.GetBytes(AppSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { 
+                    new Claim(ClaimTypes.Name, user.Nome.ToString()),
+                    new Claim(ClaimTypes.Role, user.Papel.ToString())
+                }),
                 Expires = DateTime.UtcNow.AddMinutes(240),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(chave), SecurityAlgorithms.HmacSha256Signature)
             };

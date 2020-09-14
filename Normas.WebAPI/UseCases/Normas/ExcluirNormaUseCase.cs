@@ -13,20 +13,14 @@ namespace Normas.WebAPI.UseCases.Normas
         private readonly IMapper _mapper;
         private readonly INormaService _normaService;
         private readonly INormaRepository _normaRepository;
-        private readonly ITipoDocumentoRepository _tipoDocumentoRepository;
-        private readonly IOrgaoExpedidorRepository _orgaoExpedidorRepository;
 
         public ExcluirNormaUseCase(IMapper mapper,
                                    INormaService normaService,
-                                   INormaRepository normaRepository,
-                                   ITipoDocumentoRepository tipoDocumentoRepository,
-                                   IOrgaoExpedidorRepository orgaoExpedidorRepository)
+                                   INormaRepository normaRepository)
         {
             _mapper = mapper;
             _normaService = normaService;
             _normaRepository = normaRepository;
-            _tipoDocumentoRepository = tipoDocumentoRepository;
-            _orgaoExpedidorRepository = orgaoExpedidorRepository;
         }
 
         public async Task<IActionResult> Excluir(int idNorma)
@@ -37,10 +31,7 @@ namespace Normas.WebAPI.UseCases.Normas
 
                 if (norma == null) return new NotFoundObjectResult("Norma não localizada.");
 
-                _normaService.ExcluiArquivoNorma(norma.LocalArquivoNorma);
-
-                norma.TipoDocumento = _tipoDocumentoRepository.GetById(norma.IdTipoDocumento);
-                norma.OrgaoExpedicao = _orgaoExpedidorRepository.GetById(norma.IdOrgaoExpedidor);
+                _normaService.ExcluiArquivoNorma(norma.LocalArquivoNormas);
 
                 var normaResponse = _mapper.Map<ExcluirNormaResponseDTO>(norma);
 

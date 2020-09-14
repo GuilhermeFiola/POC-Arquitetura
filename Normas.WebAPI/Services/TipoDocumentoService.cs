@@ -18,7 +18,7 @@ namespace Normas.WebAPI.Services
         {
             try
             {
-                return _tipoDocumentoRepository.GetAll().FirstOrDefault(w => w.Descricao.Contains(descricaoDocumento));
+                return _tipoDocumentoRepository.GetAll().First(w => w.Descricao.Contains(descricaoDocumento));
             }
             catch(Exception ex)
             {

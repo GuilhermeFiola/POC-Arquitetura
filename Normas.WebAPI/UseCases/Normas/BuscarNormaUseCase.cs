@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Normas.WebAPI.DTO.Normas;
 using Normas.WebAPI.Interfaces.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Normas.WebAPI.UseCases.Normas
@@ -14,18 +12,12 @@ namespace Normas.WebAPI.UseCases.Normas
 
         private readonly IMapper _mapper;
         private readonly INormaRepository _normaRepository;
-        private readonly ITipoDocumentoRepository _tipoDocumentoRepository;
-        private readonly IOrgaoExpedidorRepository _orgaoExpedidorRepository;
 
         public BuscarNormaUseCase(IMapper mapper,
-                                  INormaRepository normaRepository,
-                                  ITipoDocumentoRepository tipoDocumentoRepository,
-                                  IOrgaoExpedidorRepository orgaoExpedidorRepository)
+                                  INormaRepository normaRepository)
         {
             _mapper = mapper;
             _normaRepository = normaRepository;
-            _tipoDocumentoRepository = tipoDocumentoRepository;
-            _orgaoExpedidorRepository = orgaoExpedidorRepository;
         }
 
         public async Task<IActionResult> Buscar(int idNorma)
@@ -35,10 +27,6 @@ namespace Normas.WebAPI.UseCases.Normas
                 var norma = _normaRepository.GetById(idNorma);
 
                 if (norma == null) return new NotFoundObjectResult("Norma não localizada.");
-
-                norma.TipoDocumento = _tipoDocumentoRepository.GetById(norma.IdTipoDocumento);
-
-                norma.OrgaoExpedicao = _orgaoExpedidorRepository.GetById(norma.IdOrgaoExpedidor);
 
                 var normaResponse = _mapper.Map<BuscarNormaResponseDTO>(norma);
 

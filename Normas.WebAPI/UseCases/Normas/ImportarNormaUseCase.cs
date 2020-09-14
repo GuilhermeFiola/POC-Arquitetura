@@ -37,7 +37,10 @@ namespace Normas.WebAPI.UseCases.Normas
                 var normaImportacao = _mapper.Map<Norma>(importarNormaDTO);
 
                 normaImportacao.TipoDocumento = _tipoDocumentoService.BuscarTipoDocumentoPorDescricao(importarNormaDTO.TipoDocumento);
-                normaImportacao.OrgaoExpedicao = _orgaoExpedidorService.BuscarOrgaoExpedidorPorDescricao(importarNormaDTO.OrgaoExpedicao);
+                normaImportacao.OrgaoExpedidor = _orgaoExpedidorService.BuscarOrgaoExpedidorPorDescricao(importarNormaDTO.OrgaoExpedidor);
+
+                normaImportacao.IdTipoDocumento = normaImportacao.TipoDocumento == null ? 1 : normaImportacao.TipoDocumento.Id;
+                normaImportacao.IdOrgaoExpedidor = normaImportacao.OrgaoExpedidor == null ? 1 : normaImportacao.OrgaoExpedidor.Id;
 
                 if (normaExistente != null)
                 {

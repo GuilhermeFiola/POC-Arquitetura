@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Normas.WebAPI.DTO.Normas;
 using Normas.WebAPI.UseCases.Normas;
@@ -10,42 +12,48 @@ namespace Normas.WebAPI.Controllers
     public class NormasController : ControllerBase
     {
         [HttpGet("{idNorma}")]
+        [Authorize]
         public async Task<IActionResult> GetNorma([FromServices] BuscarNormaUseCase _casoUso,
-                                                  [FromRoute] int idNorma)
+                                                  [FromRoute][Required] int idNorma)
         {
             return await _casoUso.Buscar(idNorma);
         }
 
         [HttpGet()]
+        [Authorize]
         public async Task<IActionResult> GetNormas([FromServices] BuscarListaNormaUseCase _casoUso)
         {
             return await _casoUso.Buscar();
         }
 
         [HttpPost()]
+        [Authorize(Roles = "Analista")]
         public async Task<IActionResult> PostNorma([FromServices]AdicionarNormaUseCase _casoUso,
-                                                   [FromForm] AdicionarNormaRequestDTO adicionarNormaDTO)
+                                                   [FromForm][Required] AdicionarNormaRequestDTO adicionarNormaDTO)
         {
             return await _casoUso.Adicionar(adicionarNormaDTO);
         }
 
         [HttpPut()]
+        [Authorize(Roles = "Analista")]
         public async Task<IActionResult> PutNorma([FromServices] AtualizaNormaUseCase _casoUso,
-                                                  [FromForm] AtualizarNormaRequestDTO atualizarNormaDTO)
+                                                  [FromForm][Required] AtualizarNormaRequestDTO atualizarNormaDTO)
         {
             return await _casoUso.Atualizar(atualizarNormaDTO);
         }
 
         [HttpDelete("{idNorma}")]
+        [Authorize(Roles = "Analista")]
         public async Task<IActionResult> DeleteNorma([FromServices] ExcluirNormaUseCase _casoUso,
-                                                     [FromRoute] int idNorma)
+                                                     [FromRoute][Required] int idNorma)
         {
             return await _casoUso.Excluir(idNorma);
         }
 
         [HttpPost("importar")]
+        [AllowAnonymous]
         public async Task<IActionResult> PostImportar([FromServices] ImportarNormaUseCase _casoUso,
-                                                      [FromBody] ImportarNormaRequestDTO importarNormaDTO)
+                                                      [FromBody][Required] ImportarNormaRequestDTO importarNormaDTO)
         {
             return await _casoUso.Importar(importarNormaDTO);
         }

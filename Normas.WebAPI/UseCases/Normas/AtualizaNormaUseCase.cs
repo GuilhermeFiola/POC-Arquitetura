@@ -5,8 +5,6 @@ using Normas.WebAPI.Entities;
 using Normas.WebAPI.Interfaces.Repositories;
 using Normas.WebAPI.Interfaces.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Normas.WebAPI.UseCases.Normas
@@ -16,20 +14,14 @@ namespace Normas.WebAPI.UseCases.Normas
         private readonly IMapper _mapper;
         private readonly INormaService _normaService;
         private readonly INormaRepository _normaRepository;
-        private readonly ITipoDocumentoRepository _tipoDocumentoRepository;
-        private readonly IOrgaoExpedidorRepository _orgaoExpedidorRepository;
 
         public AtualizaNormaUseCase(IMapper mapper,
                                     INormaService normaService,
-                                    INormaRepository normaRepository,
-                                    ITipoDocumentoRepository tipoDocumentoRepository,
-                                    IOrgaoExpedidorRepository orgaoExpedidorRepository)
+                                    INormaRepository normaRepository)
         {
             _mapper = mapper;
             _normaService = normaService;
             _normaRepository = normaRepository;
-            _tipoDocumentoRepository = tipoDocumentoRepository;
-            _orgaoExpedidorRepository = orgaoExpedidorRepository;
         }
 
         public async Task<IActionResult> Atualizar(AtualizarNormaRequestDTO atualizarNormaDTO)
@@ -40,17 +32,17 @@ namespace Normas.WebAPI.UseCases.Normas
 
                 if (norma == null) return new NotFoundObjectResult("Norma não localizada.");
 
-                _normaService.ExcluiArquivoNorma(norma.LocalArquivoNorma);
+                _normaService.ExcluiArquivoNorma(norma.LocalArquivoNormas);
 
-                var localArquivoNorma = await _normaService.GravarArquivoNormaAsync(atualizarNormaDTO.ArquivoNorma);
+                var localArquivoNormas = await _normaService.GravarArquivoNormaAsync(atualizarNormaDTO.ArquivoNorma);
 
                 var normaUpdate = _mapper.Map<Norma>(atualizarNormaDTO);
 
-                normaUpdate.TipoDocumento = _tipoDocumentoRepository.GetById(normaUpdate.IdTipoDocumento);
-                normaUpdate.OrgaoExpedicao = _orgaoExpedidorRepository.GetById(normaUpdate.IdOrgaoExpedidor);
-                normaUpdate.LocalArquivoNorma = localArquivoNorma;
+                normaUpdate.LocalArquivoNormas = localArquivoNormas;
 
-                var normaResponse = _mapper.Map<AtualizarNormaResponseDTO>(_normaRepository.Update(normaUpdate));
+                _normaRepository.Update(normaUpdate);
+
+                var normaResponse = _mapper.Map<AtualizarNormaResponseDTO>(_normaRepository.GetById(atualizarNormaDTO.Id));
 
                 return new OkObjectResult(normaResponse);
             }

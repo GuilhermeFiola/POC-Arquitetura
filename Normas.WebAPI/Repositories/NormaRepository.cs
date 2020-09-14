@@ -1,4 +1,5 @@
-﻿using Normas.WebAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Normas.WebAPI.Data;
 using Normas.WebAPI.Entities;
 using Normas.WebAPI.Interfaces.Repositories;
 using System.Collections.Generic;
@@ -17,12 +18,19 @@ namespace Normas.WebAPI.Repositories
 
         public IEnumerable<Norma> GetAll()
         {
-            return _context.Normas;
+            return _context
+                    .Normas
+                    .Include(o => o.OrgaoExpedidor)
+                    .Include(t => t.TipoDocumento);
         }
 
         public Norma GetById(int id)
         {
-            return _context.Normas.FirstOrDefault(w => w.Id == id);
+            return _context
+                    .Normas
+                    .Include(o => o.OrgaoExpedidor)
+                    .Include(t => t.TipoDocumento)
+                    .FirstOrDefault(w => w.Id == id);
         }
 
         public Norma Insert(Norma norma)

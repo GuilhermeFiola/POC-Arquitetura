@@ -34,13 +34,13 @@ namespace Normas.WebAPI.UseCases.Normas
         {
             try
             {
-                var localArquivoNorma = await _normaService.GravarArquivoNormaAsync(adicionarNormaDTO.ArquivoNorma);
+                var localArquivoNormas = await _normaService.GravarArquivoNormaAsync(adicionarNormaDTO.ArquivoNorma);
 
                 var norma = _mapper.Map<Norma>(adicionarNormaDTO);
 
                 norma.TipoDocumento = _tipoDocumentoRepository.GetById(norma.IdTipoDocumento);
-                norma.OrgaoExpedicao = _orgaoExpedidorRepository.GetById(norma.IdOrgaoExpedidor);
-                norma.LocalArquivoNorma = localArquivoNorma;
+                norma.OrgaoExpedidor = _orgaoExpedidorRepository.GetById(norma.IdOrgaoExpedidor);
+                norma.LocalArquivoNormas = localArquivoNormas;
 
                 var normaResponse = _mapper.Map<AdicionarNormaResponseDTO>(_normaRepository.Insert(norma));
 

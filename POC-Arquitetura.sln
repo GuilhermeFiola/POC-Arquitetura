@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NormasExternas.API", "NormasExternas.API\NormasExternas.API.csproj", "{2BF4BFEC-1293-499A-B7B1-F7E73530EAAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{CC043B7E-56A9-4305-A340-353AFB06DC89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC043B7E-56A9-4305-A340-353AFB06DC89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC043B7E-56A9-4305-A340-353AFB06DC89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BF4BFEC-1293-499A-B7B1-F7E73530EAAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BF4BFEC-1293-499A-B7B1-F7E73530EAAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BF4BFEC-1293-499A-B7B1-F7E73530EAAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BF4BFEC-1293-499A-B7B1-F7E73530EAAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +71,7 @@ Global
 		{5476BB16-E0AE-4D92-ABC5-2944C2480D3D} = {75704F15-C563-4468-B239-B017D72037E6}
 		{FE7FA9BC-AB43-4343-BF1C-BC0961F1D2E5} = {75704F15-C563-4468-B239-B017D72037E6}
 		{CC043B7E-56A9-4305-A340-353AFB06DC89} = {5476BB16-E0AE-4D92-ABC5-2944C2480D3D}
+		{2BF4BFEC-1293-499A-B7B1-F7E73530EAAB} = {FE7FA9BC-AB43-4343-BF1C-BC0961F1D2E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {43D22807-8D4A-40C0-B666-6CEA2E1D3D99}
