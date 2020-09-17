@@ -23,10 +23,17 @@ namespace Seguranca.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
             services.AddControllers();
 
             services.AddScoped<IUsuarioService, UsuarioService>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Cors", builder =>
+                                    builder.AllowAnyOrigin()
+                                           .AllowAnyMethod()
+                                           .AllowAnyHeader());
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -39,9 +46,7 @@ namespace Seguranca.WebAPI
         {
             app.UseRouting();
 
-            app.UseCors(x => x.AllowAnyHeader()
-                              .AllowAnyMethod()
-                              .AllowCredentials());
+            app.UseCors("Cors");
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 

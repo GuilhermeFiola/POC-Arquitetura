@@ -33,10 +33,23 @@ namespace Normas.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
-            services.AddControllers().AddNewtonsoftJson(o =>
-            {
-                o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            services.AddControllers()
+                    .AddNewtonsoftJson(o => {
+                        o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    })
+                    .AddJsonOptions(options => {
+                        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                        options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+                    });
+
+            services.AddCors(options => {
+                        options.AddPolicy("cors", builder => {
+                                    builder
+                                        .AllowAnyOrigin()
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod()
+                                        .AllowCredentials();
+                        });
             });
 
             #region Autenticação e Autorização
@@ -109,14 +122,13 @@ namespace Normas.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors(x => x.AllowAnyHeader()
-                              .AllowAnyMethod()
-                              .AllowCredentials());
+            app.UseCors("cors");
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 
