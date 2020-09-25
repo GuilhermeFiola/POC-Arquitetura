@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Normas.WebAPI.DTO.Normas;
 using Normas.WebAPI.Entities;
@@ -35,7 +36,7 @@ namespace Normas.WebAPI.UseCases.Normas
             try
             {
                 var localArquivoNormas = await _normaService.GravarArquivoNormaAsync(adicionarNormaDTO.ArquivoNorma);
-
+                
                 var norma = _mapper.Map<Norma>(adicionarNormaDTO);
 
                 norma.TipoDocumento = _tipoDocumentoRepository.GetById(norma.IdTipoDocumento);
@@ -43,6 +44,8 @@ namespace Normas.WebAPI.UseCases.Normas
                 norma.LocalArquivoNormas = localArquivoNormas;
 
                 var normaResponse = _mapper.Map<AdicionarNormaResponseDTO>(_normaRepository.Insert(norma));
+
+                normaResponse.LocalArquivoNormas = _normaService.RetornaLinkArquivoNorma(localArquivoNormas);
 
                 return new OkObjectResult(normaResponse);
             }

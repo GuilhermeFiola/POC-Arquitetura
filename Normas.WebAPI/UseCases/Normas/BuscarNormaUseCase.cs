@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Normas.WebAPI.DTO.Normas;
 using Normas.WebAPI.Interfaces.Repositories;
+using Normas.WebAPI.Interfaces.Services;
 using System;
 using System.Threading.Tasks;
 
@@ -12,12 +13,15 @@ namespace Normas.WebAPI.UseCases.Normas
 
         private readonly IMapper _mapper;
         private readonly INormaRepository _normaRepository;
+        private readonly INormaService _normaService;
 
         public BuscarNormaUseCase(IMapper mapper,
-                                  INormaRepository normaRepository)
+                                  INormaRepository normaRepository,
+                                  INormaService normaService)
         {
             _mapper = mapper;
             _normaRepository = normaRepository;
+            _normaService = normaService;
         }
 
         public async Task<IActionResult> Buscar(int idNorma)
@@ -29,6 +33,9 @@ namespace Normas.WebAPI.UseCases.Normas
                 if (norma == null) return new NotFoundObjectResult("Norma não localizada.");
 
                 var normaResponse = _mapper.Map<BuscarNormaResponseDTO>(norma);
+
+                normaResponse.LocalArquivoNormas = normaResponse.Externa == "N" ?
+                        _normaService.RetornaLinkArquivoNorma(normaResponse.LocalArquivoNormas) : normaResponse.LocalArquivoNormas;
 
                 return new OkObjectResult(normaResponse);
             }

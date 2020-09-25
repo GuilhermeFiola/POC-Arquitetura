@@ -34,6 +34,10 @@ namespace Normas.WebAPI.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(100);
 
+                    b.Property<string>("Externa")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("IdOrgaoExpedidor")
                         .HasColumnType("INTEGER");
 

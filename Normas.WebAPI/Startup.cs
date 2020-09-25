@@ -18,6 +18,10 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Linq;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Normas.WebAPI.UseCases.OrgaoExpedidor;
+using Normas.WebAPI.UseCases.TipoDocumento;
 
 namespace Normas.WebAPI
 {
@@ -42,14 +46,12 @@ namespace Normas.WebAPI
                         options.JsonSerializerOptions.DictionaryKeyPolicy = null;
                     });
 
-            services.AddCors(options => {
-                        options.AddPolicy("cors", builder => {
-                                    builder
-                                        .AllowAnyOrigin()
-                                        .AllowAnyHeader()
-                                        .AllowAnyMethod()
-                                        .AllowCredentials();
-                        });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Cors", builder =>
+                                    builder.AllowAnyOrigin()
+                                           .AllowAnyMethod()
+                                           .AllowAnyHeader());
             });
 
             #region Autenticação e Autorização
@@ -80,6 +82,8 @@ namespace Normas.WebAPI
             );
             #endregion
 
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             #region DI Repositórios
             services.AddScoped<INormaRepository, NormaRepository>();
             services.AddScoped<IOrgaoExpedidorRepository, OrgaoExpedidorRepository>();
@@ -99,6 +103,12 @@ namespace Normas.WebAPI
             services.AddScoped<AtualizaNormaUseCase>();
             services.AddScoped<ExcluirNormaUseCase>();
             services.AddScoped<ImportarNormaUseCase>();
+
+            services.AddScoped<BuscarOrgaoExpedidorUseCase>();
+            services.AddScoped<BuscarListaOrgaoExpedidorUseCase>();
+
+            services.AddScoped<BuscarTipoDocumentoUseCase>();
+            services.AddScoped<BuscarListaTipoDocumentoUseCase>();
             #endregion
 
             #region DI Mappers
@@ -128,7 +138,9 @@ namespace Normas.WebAPI
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors("cors");
+            app.UseCors("Cors");
+
+            app.UseFileServer();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
-import { AccountService } from '../../services/account.service';
+import { AccountService } from '../../shared/services/account.service';
 
 @Component({ templateUrl: 'login.component.html' })
 

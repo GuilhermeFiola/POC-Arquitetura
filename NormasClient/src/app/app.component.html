@@ -1,13 +1,29 @@
-<!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
-  <div class="navbar-nav">
-      <!-- <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-      <a class="nav-item nav-link" routerLink="/users" routerLinkActive="active">Users</a> -->
-      <a class="nav-item nav-link" (click)="logout()">Logout</a>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" *ngIf="user">
+  
+  <a class="navbar-brand" href="#">Módulo de Normas</a>
+  
+  <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed"
+          data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown active" ngbDropdown>
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1" ngbDropdownToggle>Cadastros</a>
+        <div class="dropdown-menu dropdown-primary" ngbDropdownMenu>
+          <a class="dropdown-item" href="/normas">Normas</a>
+          <a class="dropdown-item" href="#">Tipos Documento</a>
+          <a class="dropdown-item" href="#">Orgãos Expedidores</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" (click)="logout()">Logout</a>
+      </li>
+    </ul>
   </div>
 </nav>
 
-<!-- main app container -->
-<div class="app-container" [ngClass]="{ 'bg-light': user }">
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>

@@ -10,7 +10,9 @@ import { JwtInterceptor } from '../app/helpers/jwt.interceptor';
 import { ErrorInterceptor } from '../app/helpers/error.interceptor';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/account/login.component';
-// import { HomeComponent } from './home';
+import { HomeComponent } from './components/home/home.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NormasModule } from './components/normas/normas.module';
 
 @NgModule({
     imports: [
@@ -23,11 +25,14 @@ import { LoginComponent } from './components/account/login.component';
         }),
         ReactiveFormsModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
+        NgbModule,
+        NormasModule
     ],
     declarations: [
         AppComponent,
-        LoginComponent
+        LoginComponent,
+        HomeComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

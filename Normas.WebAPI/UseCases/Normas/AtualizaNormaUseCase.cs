@@ -44,6 +44,8 @@ namespace Normas.WebAPI.UseCases.Normas
 
                 var normaResponse = _mapper.Map<AtualizarNormaResponseDTO>(_normaRepository.GetById(atualizarNormaDTO.Id));
 
+                normaResponse.LocalArquivoNormas = _normaService.RetornaLinkArquivoNorma(localArquivoNormas);
+
                 return new OkObjectResult(normaResponse);
             }
             catch (Exception ex)

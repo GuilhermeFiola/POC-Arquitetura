@@ -10,19 +10,23 @@ namespace Normas.WebAPI.Services
     public class NormaService : INormaService
     {
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly HttpContext _httpContext;
 
-        public NormaService(IWebHostEnvironment hostEnvironment)
+        public NormaService(IWebHostEnvironment hostEnvironment,
+                            IHttpContextAccessor httpContextAccessor)
         {
             _hostEnvironment = hostEnvironment;
+            _httpContext = httpContextAccessor.HttpContext;
         }
+
 
         public async Task<string> GravarArquivoNormaAsync(IFormFile arquivoNormas)
         {
             try
             {
                 var nomeArquivo = Guid.NewGuid().ToString();
-                
-                var caminhoArquivo = _hostEnvironment.WebRootPath + "\\Docs\\" + nomeArquivo + ".pdf";
+                var localArquivoInterno = "\\Docs\\" + nomeArquivo + ".pdf";
+                var caminhoArquivo = _hostEnvironment.WebRootPath + localArquivoInterno;
 
                 if (arquivoNormas.Length > 0)
                 {
@@ -32,7 +36,7 @@ namespace Normas.WebAPI.Services
                     }
                 }
 
-                return caminhoArquivo;
+                return localArquivoInterno;
             }
             catch(Exception ex)
             {
@@ -45,9 +49,11 @@ namespace Normas.WebAPI.Services
         {
             try
             {
+                var caminhoArquivo = _hostEnvironment.WebRootPath + localArquivoNormas;
+
                 if (localArquivoNormas.Length > 0)
                 {
-                    File.Delete(localArquivoNormas);
+                    File.Delete(caminhoArquivo);
                 }
             }
             catch (Exception ex)
@@ -55,6 +61,15 @@ namespace Normas.WebAPI.Services
                 throw new Exception("Ocorreu um erro ao excluir o arquivo.", ex);
             }
 
+        }
+
+        public string RetornaLinkArquivoNorma(string localArquivoInterno)
+        {
+            var request = _httpContext.Request;
+            var host = request.Host.ToUriComponent();
+            var pathBase = request.PathBase.ToUriComponent();
+
+            return $"{request.Scheme}://{host}{pathBase}{localArquivoInterno.Replace("\\", "/")}";
         }
     }
 }

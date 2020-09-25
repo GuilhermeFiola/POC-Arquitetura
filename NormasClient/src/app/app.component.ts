@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { AccountService } from '../app/services/account.service';
-import { User } from '../app/models/user';
+import { AccountService } from './shared/services/account.service';
+import { User } from './shared/models/user';
 
 @Component({ selector: 'app',
              templateUrl: 'app.component.html'

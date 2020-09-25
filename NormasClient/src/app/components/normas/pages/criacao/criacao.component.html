@@ -1,0 +1,69 @@
+<div class="container">
+    <h2 class="text-center">Cadastrar Nova Norma</h2>
+
+    <form [formGroup]="formGroup">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <fieldset disabled>
+                    <div class="form-group">
+                        <label for="id">ID Norma</label>
+                        <input type="text" id="id" class="form-control" placeholder="ID Norma">
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <label for="codigoNorma">Código da Norma</label>
+                <input type="text" class="form-control" id="codigoNorma" aria-describedby="codigoNorma" placeholder="Código da Norma">    
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="descricaoNorma">Descrição</label>
+            <input type="text" class="form-control" id="descricaoNorma" aria-describedby="descricaoNorma" placeholder="Descrição da Norma">
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-4">
+                <label for="tipoDocumento">Tipo Documento</label>
+                <select class="form-control" id="tipoDocumento"></select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="orgaoExpedidor">Orgão Expedidor</label>
+                <select class="form-control" id="orgaoExpedidor"></select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="dataPublicacao">Data Publicação</label>
+                <input type="date" class="form-control" id="dataPublicacao" aria-describedby="dataPublicacao" placeholder="Data de Publicação">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="resumo">Resumo</label>
+            <textarea class="form-control" id="resumo" rows="3" placeholder="Resumo sobre a norma"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="observacao">Observações</label>
+            <textarea class="form-control" id="resumo" rows="3" placeholder="Observações sobre a norma"></textarea>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="custom-file">
+              <input type="file" class="form-control custom-file-input" formControlName="arquivoNorma" id="arquivoNorma" (change)="selecionarArquivo($event)">
+              <label class="custom-file-label" for="arquivoNorma" data-browse="Selecionar">Escolha o arquivo de normas</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <button type="submit" class="btn btn-primary col-md-6">Salvar Produto</button>
+            </div>
+
+            <div class="col-md-6 text-center">
+                <button type="submit" class="btn btn-danger col-md-6" (click)="voltar()">Voltar</button>
+            </div>
+        </div>
+    </form>
+</div>

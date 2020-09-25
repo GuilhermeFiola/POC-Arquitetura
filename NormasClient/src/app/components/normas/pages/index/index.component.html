@@ -1,0 +1,30 @@
+<div class="container">
+    <h1>Cadastro de Normas</h1>
+  
+    <a href="#" routerLink="/normas/Criacao" class="btn btn-success">Criar Norma</a>
+    
+    <table class="table table-bordered">
+      <tr>
+        <th>ID</th>
+        <th>Codigo Norma</th>
+        <th>Tipo Documento</th>
+        <th>Orgao Expedidor</th>
+        <th>Data Publicacao</th>
+        <th>Arquivo</th>
+        <th>Ações</th>
+      </tr>
+      <tr *ngFor="let norma of listaNormas">
+        <td>{{ norma.id }}</td>
+        <td>{{ norma.codigoNorma }}</td>
+        <td>{{ norma.tipoDocumento?.descricao }}</td>
+        <td>{{ norma.orgaoExpedidor?.descricao }}</td>
+        <td>{{ norma.dataPublicacao | date: 'dd/MM/yyyy' }}</td>
+        <td><a href="{{ norma.localArquivoNormas }}" target="_blank">Abrir Norma</a></td>
+        <td>
+          <a href="#" [routerLink]="['/normas/Visualizacao/', norma.id]" class="btn btn-info">Visualizar</a>
+          <a href="#" [routerLink]="['/normas/Atualizacao/', norma.id]" class="btn btn-primary">Editar</a>
+          <button type="button" (click)="deletePost(norma.id)" class="btn btn-danger">Excluir</button>
+        </td>
+      </tr>
+    </table>
+ </div>

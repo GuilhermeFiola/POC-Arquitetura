@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Normas.WebAPI.DTO.Normas;
+using Normas.WebAPI.DTO.OrgaoExpedidor;
+using Normas.WebAPI.DTO.TipoDocumento;
 using Normas.WebAPI.Entities;
 
 namespace Normas.WebAPI.Helpers
@@ -13,6 +15,7 @@ namespace Normas.WebAPI.Helpers
             CreateMap<AdicionarNormaRequestDTO, Norma>()
                 .ForMember(dest => dest.IdTipoDocumento, opt => opt.MapFrom(s => s.TipoDocumento))
                 .ForMember(dest => dest.IdOrgaoExpedidor, opt => opt.MapFrom(s => s.OrgaoExpedidor))
+                .ForMember(dest => dest.Externa, opt => opt.MapFrom(s => "N"))
                 .ForMember(dest => dest.TipoDocumento, opt => opt.Ignore())
                 .ForMember(dest => dest.OrgaoExpedidor, opt => opt.Ignore());
 
@@ -21,6 +24,7 @@ namespace Normas.WebAPI.Helpers
             CreateMap<AtualizarNormaRequestDTO, Norma>()
                 .ForMember(dest => dest.IdTipoDocumento, opt => opt.MapFrom(s => s.TipoDocumento))
                 .ForMember(dest => dest.IdOrgaoExpedidor, opt => opt.MapFrom(s => s.OrgaoExpedidor))
+                .ForMember(dest => dest.Externa, opt => opt.MapFrom(s => "N"))
                 .ForMember(dest => dest.TipoDocumento, opt => opt.Ignore())
                 .ForMember(dest => dest.OrgaoExpedidor, opt => opt.Ignore());
 
@@ -29,10 +33,15 @@ namespace Normas.WebAPI.Helpers
             CreateMap<Norma, ExcluirNormaResponseDTO>();
 
             CreateMap<ImportarNormaRequestDTO, Norma>()
+                .ForMember(dest => dest.Externa, opt => opt.MapFrom(s => "S"))
                 .ForMember(dest => dest.TipoDocumento, opt => opt.Ignore())
                 .ForMember(dest => dest.OrgaoExpedidor, opt => opt.Ignore());
 
             CreateMap<Norma, ImportarNormaResponseDTO>();
+
+            CreateMap<OrgaoExpedidor, BuscarOrgaoExpedidorResponseDTO>();
+
+            CreateMap<TipoDocumento, BuscarTipoDocumentoResponseDTO>();
         }
     }
 }

@@ -8,5 +8,7 @@ namespace Normas.WebAPI.Interfaces.Services
         Task<string> GravarArquivoNormaAsync(IFormFile arquivoNormas);
 
         void ExcluiArquivoNorma(string localArquivoNormas);
+
+        string RetornaLinkArquivoNorma(string localArquivoInterno);
     }
 }

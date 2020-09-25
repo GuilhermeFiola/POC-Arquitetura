@@ -13,6 +13,7 @@ namespace Normas.WebAPI.Entities
         public string Resumo { get; set; }
         public string Observacao { get; set; }
         public string LocalArquivoNormas { get; set; }
+        public string Externa { get; set; }
         public TipoDocumento TipoDocumento { get; set; }
         public OrgaoExpedidor OrgaoExpedidor { get; set; }
 
