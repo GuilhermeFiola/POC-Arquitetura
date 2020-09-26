@@ -1,1 +1,122 @@
-<p>atualizacao works!</p>
+<div class="container">
+    <h2 class="text-center">Cadastrar Nova Norma</h2>
+
+    <form [formGroup]="formGroup">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <fieldset disabled>
+                    <div class="form-group">
+                        <label for="id">ID Norma</label>
+                        <input type="text" 
+                               id="id" 
+                               class="form-control" 
+                               placeholder="ID Norma"
+                               formControlName="id" >
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <label for="codigoNorma">Código da Norma</label>
+                <input type="text" 
+                       class="form-control" 
+                       formControlName="codigoNorma" 
+                       id="codigoNorma" 
+                       aria-describedby="codigoNorma" 
+                       placeholder="Código da Norma" 
+                       [attr.disabled] = "normaExterna === 'S' ? 'disabled' : null"
+                       [ngClass]="{ 'is-invalid': submitted && f.codigoNorma.errors }">    
+                <div *ngIf="submitted && f.codigoNorma.errors" class="invalid-feedback">
+                    <div *ngIf="f.codigoNorma.errors.required">Código da norma é obrigatório</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="descricaoNorma">Descrição</label>
+            <input type="text" 
+                   class="form-control" 
+                   formControlName="descricao" 
+                   id="descricaoNorma" 
+                   aria-describedby="descricaoNorma" 
+                   placeholder="Descrição da Norma" 
+                   [ngClass]="{ 'is-invalid': submitted && f.descricao.errors }">
+            <div *ngIf="submitted && f.descricao.errors" class="invalid-feedback">
+                <div *ngIf="f.descricao.errors.required">Descrição é obrigatória</div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-4">
+                <label for="tipoDocumento">Tipo Documento</label>
+                <select class="form-control" id="tipoDocumento" formControlName="tipoDocumento" [ngClass]="{ 'is-invalid': submitted && f.tipoDocumento.errors }">
+                    <option value=""></option>
+                    <option *ngFor="let tipoDocumento of listaTiposDocumento" [ngValue]="tipoDocumento?.id">{{tipoDocumento?.descricao}}</option>
+                </select>
+                <div *ngIf="submitted && f.tipoDocumento.errors" class="invalid-feedback">
+                    <div *ngIf="f.tipoDocumento.errors.required">Tipo de documento é obrigatório</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="orgaoExpedidor">Orgão Expedidor</label>
+                <select class="form-control" id="orgaoExpedidor" formControlName="orgaoExpedidor" [ngClass]="{ 'is-invalid': submitted && f.orgaoExpedidor.errors }">
+                    <option value=""></option>
+                    <option *ngFor="let orgaoExpedidor of listaOrgaosExpedidores" [ngValue]="orgaoExpedidor?.id">{{orgaoExpedidor?.descricao}}</option>
+                </select>
+                <div *ngIf="submitted && f.orgaoExpedidor.errors" class="invalid-feedback">
+                    <div *ngIf="f.orgaoExpedidor.errors.required">Orgão expedidor é obrigatório</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="dataPublicacao">Data Publicação</label>
+                <input type="date" 
+                       class="form-control" 
+                       formControlName="dataPublicacao" 
+                       id="dataPublicacao" 
+                       aria-describedby="dataPublicacao" 
+                       placeholder="Data de Publicação"
+                       [attr.disabled] = "normaExterna === 'S' ? 'disabled' : null"
+                       [ngClass]="{ 'is-invalid': submitted && f.dataPublicacao.errors }">
+                <div *ngIf="submitted && f.dataPublicacao.errors" class="invalid-feedback">
+                    <div *ngIf="f.dataPublicacao.errors.required">Data de publicação é obrigatória</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="resumo">Resumo</label>
+            <textarea class="form-control" formControlName="resumo" id="resumo" rows="3" maxlength="250" placeholder="Resumo sobre a norma"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="observacao">Observações</label>
+            <textarea class="form-control" formControlName="observacao" id="resumo" rows="3" maxlength="250" placeholder="Observações sobre a norma"></textarea>
+        </div>
+
+        <div class="form-group" *ngIf="normaExterna === 'N'">
+            <div class="custom-file">
+              <input type="file" 
+                     class="form-control custom-file-input" 
+                     id="arquivoNorma" 
+                     [ngClass]="{ 'is-invalid': submitted && f.arquivoNorma.errors }"
+                     (change)="selecionarArquivo($event)">
+              <label class="custom-file-label" for="arquivoNorma" data-browse="Selecionar">Escolha o arquivo de normas</label>
+              <div *ngIf="submitted && f.arquivoNorma.errors" class="custom-file-control invalid-feedback">
+                <div *ngIf="f.arquivoNorma.errors.required">É obrigatório selecionar um arquivo de normas</div>
+              </div>
+            </div>
+        </div>
+        
+
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <button type="submit" class="btn btn-primary col-md-6" (click)="atualizarNorma()">Salvar Norma</button>
+            </div>
+
+            <div class="col-md-6 text-center">
+                <button type="submit" class="btn btn-danger col-md-6" (click)="voltar()">Voltar</button>
+            </div>
+        </div>
+    </form>
+</div>

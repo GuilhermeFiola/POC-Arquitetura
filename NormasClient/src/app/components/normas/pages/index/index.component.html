@@ -23,8 +23,35 @@
         <td>
           <a href="#" [routerLink]="['/normas/Visualizacao/', norma.id]" class="btn btn-info">Visualizar</a>
           <a href="#" [routerLink]="['/normas/Atualizacao/', norma.id]" class="btn btn-primary">Editar</a>
-          <button type="button" (click)="deletePost(norma.id)" class="btn btn-danger">Excluir</button>
+          <button type="button" (click)="abrirModalExclusaoNorma(modalExclusao, norma.id, norma.codigoNorma)" class="btn btn-danger">Excluir</button>  <!--(click)="deletePost(norma.id)" -->
         </td>
       </tr>
     </table>
  </div>
+
+ <ng-template #modalExclusao let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Exclusão de norma</h4>
+  </div>
+  <div class="modal-body">
+    <p>Deseja realmente excluir a norma {{codigoNormaExclusao}}?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="modal.close(true)">Excluir</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close(false)">Cancelar</button>
+  </div>
+
+  <!-- <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss(false)">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    This is example from ItSolutionStuff.com
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+  </div> -->
+</ng-template>

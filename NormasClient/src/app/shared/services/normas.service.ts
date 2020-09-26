@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { Norma } from '../../components/normas/models/norma';
+import { AdicionarNorma } from 'src/app/components/normas/models/adicionar-norma';
 
 @Injectable({ providedIn: 'root' })
 export class NormasService {
@@ -19,6 +20,38 @@ export class NormasService {
         return this.http.get(`${environment.apiNormas}/api/normas`)
             .pipe(
                 map((norma: Norma[]) => {
+                    return norma;
+            }));
+    }
+
+    buscarNormaPorId(idNorma: number): Observable<Norma> {
+        return this.http.get(`${environment.apiNormas}/api/normas/${idNorma}`)
+            .pipe(
+                map((norma: Norma) => {
+                    return norma;
+            }));
+    }
+
+    gravarNorma(novaNorma: FormData): Observable<Norma> {
+        return this.http.post(`${environment.apiNormas}/api/normas`, novaNorma)
+            .pipe(
+                map((norma: Norma) => {
+                    return norma;
+            }));
+    }
+
+    atualizarNorma(atualizacaoNorma: FormData): Observable<Norma> {
+        return this.http.put(`${environment.apiNormas}/api/normas`, atualizacaoNorma)
+            .pipe(
+                map((norma: Norma) => {
+                    return norma;
+            }));
+    }
+
+    excluirNorma(idNorma: number): Observable<Norma> {
+        return this.http.delete(`${environment.apiNormas}/api/normas/${idNorma}`)
+            .pipe(
+                map((norma: Norma) => {
                     return norma;
             }));
     }

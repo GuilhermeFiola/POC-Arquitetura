@@ -20,7 +20,6 @@ namespace Normas.WebAPI.DTO.Normas
         public DateTime DataPublicacao { get; set; }
         public string Resumo { get; set; }
         public string Observacao { get; set; }
-        [Required]
         public IFormFile ArquivoNorma { get; set; }
     }
 }

@@ -28,23 +28,34 @@ namespace Normas.WebAPI.UseCases.Normas
         {
             try
             {
+                var localArquivoNormas = string.Empty;
                 var norma = _normaRepository.GetById(atualizarNormaDTO.Id);
 
                 if (norma == null) return new NotFoundObjectResult("Norma não localizada.");
 
-                _normaService.ExcluiArquivoNorma(norma.LocalArquivoNormas);
-
-                var localArquivoNormas = await _normaService.GravarArquivoNormaAsync(atualizarNormaDTO.ArquivoNorma);
-
                 var normaUpdate = _mapper.Map<Norma>(atualizarNormaDTO);
+                normaUpdate.Externa = norma.Externa;
 
-                normaUpdate.LocalArquivoNormas = localArquivoNormas;
+                if (norma.Externa == "N")
+                {
+                    _normaService.ExcluiArquivoNorma(norma.LocalArquivoNormas);
+                    localArquivoNormas = await _normaService.GravarArquivoNormaAsync(atualizarNormaDTO.ArquivoNorma);
+                    normaUpdate.LocalArquivoNormas = localArquivoNormas;
+                } else
+                {
+                    normaUpdate.CodigoNorma = norma.CodigoNorma;
+                    normaUpdate.DataPublicacao = norma.DataPublicacao;
+                    normaUpdate.LocalArquivoNormas = norma.LocalArquivoNormas;
+                }
 
                 _normaRepository.Update(normaUpdate);
 
                 var normaResponse = _mapper.Map<AtualizarNormaResponseDTO>(_normaRepository.GetById(atualizarNormaDTO.Id));
 
-                normaResponse.LocalArquivoNormas = _normaService.RetornaLinkArquivoNorma(localArquivoNormas);
+                if (norma.Externa == "N")
+                {
+                    normaResponse.LocalArquivoNormas = _normaService.RetornaLinkArquivoNorma(localArquivoNormas);
+                }
 
                 return new OkObjectResult(normaResponse);
             }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IndexComponent } from './pages/index/index.component';
 import { NormasRoutingModule } from './normas-routing.module';
 import { CriacaoComponent } from './pages/criacao/criacao.component';
@@ -17,7 +18,9 @@ const COMPONENTS = [
   declarations: [...COMPONENTS],
   imports: [
     CommonModule,
-    NormasRoutingModule
+    NormasRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class NormasModule { }

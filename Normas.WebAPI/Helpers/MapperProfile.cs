@@ -24,7 +24,6 @@ namespace Normas.WebAPI.Helpers
             CreateMap<AtualizarNormaRequestDTO, Norma>()
                 .ForMember(dest => dest.IdTipoDocumento, opt => opt.MapFrom(s => s.TipoDocumento))
                 .ForMember(dest => dest.IdOrgaoExpedidor, opt => opt.MapFrom(s => s.OrgaoExpedidor))
-                .ForMember(dest => dest.Externa, opt => opt.MapFrom(s => "N"))
                 .ForMember(dest => dest.TipoDocumento, opt => opt.Ignore())
                 .ForMember(dest => dest.OrgaoExpedidor, opt => opt.Ignore());
 
