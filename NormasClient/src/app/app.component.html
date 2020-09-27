@@ -13,14 +13,19 @@
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1" ngbDropdownToggle>Cadastros</a>
         <div class="dropdown-menu dropdown-primary" ngbDropdownMenu>
           <a class="dropdown-item" href="/normas">Normas</a>
-          <a class="dropdown-item" href="#">Tipos Documento</a>
-          <a class="dropdown-item" href="#">Orgãos Expedidores</a>
+          <a class="dropdown-item" href="/tipodocumento">Tipos Documento</a>
+          <a class="dropdown-item" href="/orgaoexpedidor">Orgãos Expedidores</a>
         </div>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" (click)="logout()">Logout</a>
+      <li class="nav-item dropdown active" ngbDropdown>
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1" ngbDropdownToggle>{{user?.nome}}</a>
+        <div class="dropdown-menu dropdown-primary dropdown-menu-right" ngbDropdownMenu>
+          <span class="dropdown-item">{{user?.papel}}</span>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="logout()">Logout</a>
+        </div>
       </li>
     </ul>
   </div>

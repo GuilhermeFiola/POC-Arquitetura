@@ -4,4 +4,5 @@ export class User {
     nome: string;
     sobrenome: string;
     token: string;
+    papel: string;
 }

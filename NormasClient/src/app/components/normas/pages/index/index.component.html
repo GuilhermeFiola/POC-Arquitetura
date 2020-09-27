@@ -1,35 +1,43 @@
 <div class="container">
-    <h1>Cadastro de Normas</h1>
-  
-    <a href="#" routerLink="/normas/Criacao" class="btn btn-success">Criar Norma</a>
-    
-    <table class="table table-bordered">
-      <tr>
-        <th>ID</th>
-        <th>Codigo Norma</th>
-        <th>Tipo Documento</th>
-        <th>Orgao Expedidor</th>
-        <th>Data Publicacao</th>
-        <th>Arquivo</th>
-        <th>Ações</th>
-      </tr>
-      <tr *ngFor="let norma of listaNormas">
-        <td>{{ norma.id }}</td>
-        <td>{{ norma.codigoNorma }}</td>
-        <td>{{ norma.tipoDocumento?.descricao }}</td>
-        <td>{{ norma.orgaoExpedidor?.descricao }}</td>
-        <td>{{ norma.dataPublicacao | date: 'dd/MM/yyyy' }}</td>
-        <td><a href="{{ norma.localArquivoNormas }}" target="_blank">Abrir Norma</a></td>
-        <td>
-          <a href="#" [routerLink]="['/normas/Visualizacao/', norma.id]" class="btn btn-info">Visualizar</a>
-          <a href="#" [routerLink]="['/normas/Atualizacao/', norma.id]" class="btn btn-primary">Editar</a>
-          <button type="button" (click)="abrirModalExclusaoNorma(modalExclusao, norma.id, norma.codigoNorma)" class="btn btn-danger">Excluir</button>  <!--(click)="deletePost(norma.id)" -->
-        </td>
-      </tr>
-    </table>
- </div>
+  <div class="card">
+    <h1 class="text-center card-header">Cadastro de Normas</h1>
 
- <ng-template #modalExclusao let-modal>
+    <a *ngIf="ehAnalista()" href="#" routerLink="/normas/Criacao" class="btn btn-success btn-criacao">Criar Norma</a>
+    
+    <div class="table-responsive card-body">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Codigo Norma</th>
+            <th scope="col">Tipo Documento</th>
+            <th scope="col">Orgao Expedidor</th>
+            <th scope="col">Data Publicacao</th>
+            <th scope="col">Arquivo</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let norma of listaNormas">
+            <th scope="row">{{ norma.id }}</th>
+            <td>{{ norma.codigoNorma }}</td>
+            <td>{{ norma.tipoDocumento?.descricao }}</td>
+            <td>{{ norma.orgaoExpedidor?.descricao }}</td>
+            <td>{{ norma.dataPublicacao | date: 'dd/MM/yyyy' }}</td>
+            <td><a class="btn btn-primary" href="{{ norma.localArquivoNormas }}" target="_blank">Abrir Norma</a></td>
+            <td>
+              <a href="#" [routerLink]="['/normas/Visualizacao/', norma.id]" class="btn btn-info">Visualizar</a>
+              <a *ngIf="ehAnalista()" href="#" [routerLink]="['/normas/Atualizacao/', norma.id]" class="btn btn-primary">Editar</a>
+              <button *ngIf="ehAnalista()" type="button" (click)="abrirModalExclusaoNorma(modalExclusao, norma.id, norma.codigoNorma)" class="btn btn-danger">Excluir</button>  <!--(click)="deletePost(norma.id)" -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalExclusao let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Exclusão de norma</h4>
   </div>
@@ -40,18 +48,4 @@
     <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="modal.close(true)">Excluir</button>
     <button type="button" class="btn btn-primary" (click)="modal.close(false)">Cancelar</button>
   </div>
-
-  <!-- <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss(false)">
-      <span aria-hidden="true">×</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    This is example from ItSolutionStuff.com
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
-  </div> -->
 </ng-template>

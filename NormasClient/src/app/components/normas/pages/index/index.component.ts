@@ -5,6 +5,8 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Norma } from '../../models/norma';
 import { NormasService } from 'src/app/shared/services/normas.service';
+import { AccountService } from 'src/app/shared/services/account.service';
+import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-index',
@@ -13,16 +15,19 @@ import { NormasService } from 'src/app/shared/services/normas.service';
 })
 export class IndexComponent implements OnInit {
 
+  usuario: User;
   listaNormas: Array<Norma> = [];
   codigoNormaExclusao: string;
 
   constructor(
     private normasService: NormasService,
     private toastrService: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private accountService: AccountService
     ) { }
 
   ngOnInit(): void {
+    this.usuario = this.accountService.userValue;
     this.buscarNormas();
   }
 
@@ -56,6 +61,10 @@ export class IndexComponent implements OnInit {
         this.excluirNorma(idNorma);
       }
     });
+  }
+
+  ehAnalista(): boolean {
+    return this.usuario.papel === 'Analista';
   }
 
 }

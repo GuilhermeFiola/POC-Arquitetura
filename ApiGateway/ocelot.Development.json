@@ -1,6 +1,17 @@
 {
   "Routes": [
-
+    {
+      "DownstreamPathTemplate": "/api/normas",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5100"
+        }
+      ],
+      "UpstreamPathTemplate": "/normas",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
     //API de Autenticação
     {
       "DownstreamPathTemplate": "/api/usuario/{everything}",
@@ -12,6 +23,68 @@
         }
       ],
       "UpstreamPathTemplate": "/usuario/{everything}",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    //API de Normas
+    {
+      "DownstreamPathTemplate": "/api/normas/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5100"
+        }
+      ],
+      "UpstreamPathTemplate": "/normas/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/normas",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5100"
+        }
+      ],
+      "UpstreamPathTemplate": "/normas",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/normas",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5100"
+        }
+      ],
+      "UpstreamPathTemplate": "/normas",
+      "UpstreamHttpMethod": [ "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/normas/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5100"
+        }
+      ],
+      "UpstreamPathTemplate": "/normas/{id}",
+      "UpstreamHttpMethod": [ "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/normas/importar",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5100"
+        }
+      ],
+      "UpstreamPathTemplate": "/normas/importar",
       "UpstreamHttpMethod": [ "POST" ]
     }
   ],

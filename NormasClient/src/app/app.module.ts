@@ -13,6 +13,7 @@ import { LoginComponent } from './components/account/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NormasModule } from './components/normas/normas.module';
+import { OrgaoExpedidorModule } from './components/orgao-expedidor/orgao-expedidor.module';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { NormasModule } from './components/normas/normas.module';
         HttpClientModule,
         AppRoutingModule,
         NgbModule,
-        NormasModule
+        NormasModule,
+        OrgaoExpedidorModule
     ],
     declarations: [
         AppComponent,

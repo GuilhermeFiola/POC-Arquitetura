@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { Norma } from '../../components/normas/models/norma';
-import { AdicionarNorma } from 'src/app/components/normas/models/adicionar-norma';
 
 @Injectable({ providedIn: 'root' })
 export class NormasService {

@@ -28,6 +28,7 @@ namespace Normas.WebAPI.Controllers
 
         [HttpPost()]
         [Authorize(Roles = "Analista")]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> PostNorma([FromServices]AdicionarNormaUseCase _casoUso,
                                                    [FromForm][Required] AdicionarNormaRequestDTO adicionarNormaDTO)
         {
@@ -36,6 +37,7 @@ namespace Normas.WebAPI.Controllers
 
         [HttpPut()]
         [Authorize(Roles = "Analista")]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> PutNorma([FromServices] AtualizaNormaUseCase _casoUso,
                                                   [FromForm][Required] AtualizarNormaRequestDTO atualizarNormaDTO)
         {
