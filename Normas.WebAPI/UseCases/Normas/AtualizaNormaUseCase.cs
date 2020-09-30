@@ -36,16 +36,20 @@ namespace Normas.WebAPI.UseCases.Normas
                 var normaUpdate = _mapper.Map<Norma>(atualizarNormaDTO);
                 normaUpdate.Externa = norma.Externa;
 
-                if (norma.Externa == "N")
+                if (norma.Externa == "N" && normaUpdate.LocalArquivoNormas != null)
                 {
                     _normaService.ExcluiArquivoNorma(norma.LocalArquivoNormas);
                     localArquivoNormas = await _normaService.GravarArquivoNormaAsync(atualizarNormaDTO.ArquivoNorma);
                     normaUpdate.LocalArquivoNormas = localArquivoNormas;
                 } else
                 {
+                    normaUpdate.LocalArquivoNormas = norma.LocalArquivoNormas;
+                }
+                
+                if(norma.Externa == "S")
+                {
                     normaUpdate.CodigoNorma = norma.CodigoNorma;
                     normaUpdate.DataPublicacao = norma.DataPublicacao;
-                    normaUpdate.LocalArquivoNormas = norma.LocalArquivoNormas;
                 }
 
                 _normaRepository.Update(normaUpdate);
@@ -54,7 +58,7 @@ namespace Normas.WebAPI.UseCases.Normas
 
                 if (norma.Externa == "N")
                 {
-                    normaResponse.LocalArquivoNormas = _normaService.RetornaLinkArquivoNorma(localArquivoNormas);
+                    normaResponse.LocalArquivoNormas = _normaService.RetornaLinkArquivoNorma(normaResponse.LocalArquivoNormas);
                 }
 
                 return new OkObjectResult(normaResponse);

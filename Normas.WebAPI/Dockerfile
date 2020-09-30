@@ -6,10 +6,10 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["Normas.WebAPI/Normas.WebAPI.csproj", "Normas.WebAPI/"]
-RUN dotnet restore "Normas.WebAPI/Normas.WebAPI.csproj"
+COPY ["Normas.WebAPI.csproj", "./"]
+RUN dotnet restore "./Normas.WebAPI.csproj"
 COPY . .
-WORKDIR "/src/Normas.WebAPI"
+WORKDIR "/src"
 RUN dotnet build "Normas.WebAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish

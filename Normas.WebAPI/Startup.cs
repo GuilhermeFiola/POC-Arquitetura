@@ -103,6 +103,7 @@ namespace Normas.WebAPI
             services.AddScoped<AtualizaNormaUseCase>();
             services.AddScoped<ExcluirNormaUseCase>();
             services.AddScoped<ImportarNormaUseCase>();
+            services.AddScoped<BuscarArquivoUseCase>(); 
 
             services.AddScoped<BuscarOrgaoExpedidorUseCase>();
             services.AddScoped<BuscarListaOrgaoExpedidorUseCase>();

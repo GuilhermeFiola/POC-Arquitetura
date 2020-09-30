@@ -14,7 +14,7 @@ export class TipoDocumentoService {
     ) { }
 
     buscarTiposDocumento(): Observable<TipoDocumento[]> {
-        return this.http.get(`${environment.apiNormas}/api/tipodocumento`)
+        return this.http.get(`${environment.apiUrl}/tipodocumento`)
             .pipe(
                 map((tipoDocumento: TipoDocumento[]) => {
                     return tipoDocumento;
@@ -22,7 +22,7 @@ export class TipoDocumentoService {
     }
 
     buscarTipoDocumentoPorId(idTipoDocumento: number): Observable<TipoDocumento> {
-        return this.http.get(`${environment.apiNormas}/api/tipodocumento/` + idTipoDocumento)
+        return this.http.get(`${environment.apiUrl}/tipodocumento/` + idTipoDocumento)
             .pipe(
                 map((tipoDocumento: TipoDocumento) => {
                     return tipoDocumento;

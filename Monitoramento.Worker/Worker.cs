@@ -45,7 +45,7 @@ namespace Monitoramento.Worker
                     clientExterno.DefaultRequestHeaders.Accept.Clear();
                     clientExterno.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     
-                    HttpResponseMessage responseNormasExternas = clientExterno.GetAsync("api/normasexternas/").Result;
+                    HttpResponseMessage responseNormasExternas = clientExterno.GetAsync("/api/normasexternas").Result;
 
                     if (responseNormasExternas.StatusCode == HttpStatusCode.OK)
                     {
@@ -63,15 +63,15 @@ namespace Monitoramento.Worker
 
                             foreach (var norma in listaNormasExternas)
                             {
-                                HttpResponseMessage responseNormas = clientNormas.PostAsync("api/normas/importar", new StringContent(JsonConvert.SerializeObject(norma), Encoding.UTF8, "application/json")).Result;
+                                HttpResponseMessage responseNormas = clientNormas.PostAsync("/normas/importar", new StringContent(JsonConvert.SerializeObject(norma), Encoding.UTF8, "application/json")).Result;
 
                                 if (responseNormas.StatusCode == HttpStatusCode.OK)
                                 {
+                                    _logger.LogInformation("Norma {CodigoNorma} da base externa inserida no módulo de normas: {time}", norma.CodigoNorma, DateTimeOffset.Now);
                                 }
                             }
                         }
                     }
-                    
                 }
 
                 _logger.LogInformation("Concluindo verificacao de normas em: {time}", DateTimeOffset.Now);

@@ -26,11 +26,36 @@ namespace Normas.WebAPI.UseCases.Normas
             _normaService = normaService;
         }
 
-        public async Task<IActionResult> Buscar()
+        public async Task<IActionResult> Buscar(BuscarNormaRequestQuery filtrosNormas)
         {
             try
             {
                 var listaNormas = _normaRepository.GetAll();
+
+                if(filtrosNormas.CodigoNorma != null)
+                {
+                    listaNormas = listaNormas.Where(w => w.CodigoNorma == filtrosNormas.CodigoNorma);
+                }
+
+                if (filtrosNormas.Descricao != null)
+                {
+                    listaNormas = listaNormas.Where(w => w.Descricao.Contains(filtrosNormas.Descricao));
+                }
+
+                if (filtrosNormas.DataPublicacao != null)
+                {
+                    listaNormas = listaNormas.Where(w => w.DataPublicacao == filtrosNormas.DataPublicacao);
+                }
+
+                if (filtrosNormas.TipoDocumento != null)
+                {
+                    listaNormas = listaNormas.Where(w => w.TipoDocumento.Id == filtrosNormas.TipoDocumento);
+                }
+
+                if (filtrosNormas.OrgaoExpedidor != null)
+                {
+                    listaNormas = listaNormas.Where(w => w.OrgaoExpedidor.Id == filtrosNormas.OrgaoExpedidor);
+                }
 
                 if (!listaNormas.Any()) return new NotFoundObjectResult("Normas não localizadas.");
 

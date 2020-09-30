@@ -25,7 +25,7 @@ export class AccountService {
     }
 
     login(usuario, senha) {
-        return this.http.post<User>(`${environment.apiUrl}/api/usuario/autenticar`, { usuario, senha })
+        return this.http.post<User>(`${environment.apiUrl}/usuario/autenticar`, { usuario, senha })
             .pipe(map(user => {
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);

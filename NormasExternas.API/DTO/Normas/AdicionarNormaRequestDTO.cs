@@ -20,6 +20,6 @@ namespace NormasExternas.WebAPI.DTO.Normas
         public DateTime DataHoraInclusao { get; set; }
         public string Resumo { get; set; }
         public string Observacao { get; set; }
-        public IFormFile ArquivoNorma { get; set; }
+        public string LocalArquivoNormas { get; set; }
     }
 }

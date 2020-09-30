@@ -6,8 +6,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5100"
+          "Host": "normas",
+          "Port": "80"
         }
       ],
       "UpstreamPathTemplate": "/normas",
@@ -19,8 +19,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5100"
+          "Host": "normas",
+          "Port": "80"
         }
       ],
       "UpstreamPathTemplate": "/normas/{id}",
@@ -32,8 +32,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5100"
+          "Host": "normas",
+          "Port": "80"
         }
       ],
       "UpstreamPathTemplate": "/normas/{id}/arquivo",
@@ -45,8 +45,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5100"
+          "Host": "normas",
+          "Port": "80"
         }
       ],
       "UpstreamPathTemplate": "/normas/importar",
@@ -58,8 +58,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5100"
+          "Host": "normas",
+          "Port": "80"
         }
       ],
       "UpstreamPathTemplate": "/tipodocumento",
@@ -71,8 +71,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5100"
+          "Host": "normas",
+          "Port": "80"
         }
       ],
       "UpstreamPathTemplate": "/orgaoexpedidor",
@@ -85,8 +85,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "8000"
+          "Host": "seguranca",
+          "Port": "80"
         }
       ],
       "UpstreamPathTemplate": "/usuario/{everything}",

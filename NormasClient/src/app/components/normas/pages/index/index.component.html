@@ -24,7 +24,11 @@
             <td>{{ norma.tipoDocumento?.descricao }}</td>
             <td>{{ norma.orgaoExpedidor?.descricao }}</td>
             <td>{{ norma.dataPublicacao | date: 'dd/MM/yyyy' }}</td>
-            <td><a class="btn btn-primary" href="{{ norma.localArquivoNormas }}" target="_blank">Abrir Norma</a></td>
+            
+            <td>
+              <a *ngIf="norma.externa == 'S'" class="btn btn-primary" href="{{ norma.localArquivoNormas }}" target="_blank">Abrir Norma</a>
+              <a *ngIf="norma.externa != 'S'" class="btn btn-primary" (click)="buscarArquivoPorId(norma.id)">Abrir Norma</a>
+            </td>
             <td>
               <a href="#" [routerLink]="['/normas/Visualizacao/', norma.id]" class="btn btn-info">Visualizar</a>
               <a *ngIf="ehAnalista()" href="#" [routerLink]="['/normas/Atualizacao/', norma.id]" class="btn btn-primary">Editar</a>

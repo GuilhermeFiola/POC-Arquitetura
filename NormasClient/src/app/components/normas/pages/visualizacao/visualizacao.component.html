@@ -76,7 +76,8 @@
 
                 <div class="row">
                     <div class="col-md-6 text-center">
-                        <a class="btn btn-primary col-md-6" [href]="formGroup.controls.arquivoNorma.value" target="_blank">Abrir Norma</a>
+                        <a *ngIf="normaExterna == 'S'" class="btn btn-primary col-md-6" [href]="formGroup.controls.arquivoNorma.value" target="_blank">Abrir Norma</a>
+                        <a *ngIf="normaExterna == 'N'" class="btn btn-primary col-md-6" (click)="buscarArquivoPorId()">Abrir Norma</a>
                     </div>
 
                     <div class="col-md-6 text-center">

@@ -21,9 +21,10 @@ namespace Normas.WebAPI.Controllers
 
         [HttpGet()]
         [Authorize]
-        public async Task<IActionResult> GetNormas([FromServices] BuscarListaNormaUseCase _casoUso)
+        public async Task<IActionResult> GetNormas([FromServices] BuscarListaNormaUseCase _casoUso,
+                                                   [FromQuery] BuscarNormaRequestQuery filtrosNormas)
         {
-            return await _casoUso.Buscar();
+            return await _casoUso.Buscar(filtrosNormas);
         }
 
         [HttpPost()]
@@ -50,6 +51,14 @@ namespace Normas.WebAPI.Controllers
                                                      [FromRoute][Required] int idNorma)
         {
             return await _casoUso.Excluir(idNorma);
+        }
+
+        [HttpGet("{idNorma}/arquivo")]
+        [Authorize(Roles = "Analista")]
+        public async Task<IActionResult> GetArquivoNorma([FromServices] BuscarArquivoUseCase _casoUso,
+                                                         [FromRoute][Required] int idNorma)
+        {
+            return await _casoUso.Buscar(idNorma);
         }
 
         [HttpPost("importar")]

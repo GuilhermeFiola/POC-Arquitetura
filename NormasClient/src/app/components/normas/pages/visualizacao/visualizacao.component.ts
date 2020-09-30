@@ -21,6 +21,7 @@ import { Norma } from '../../models/norma';
 export class VisualizacaoComponent implements OnInit {
 
   idNorma: number;
+  normaExterna: string;
   listaOrgaosExpedidores: OrgaoExpedidor[] = null;
   listaTiposDocumento: TipoDocumento[] = null;
 
@@ -95,6 +96,20 @@ export class VisualizacaoComponent implements OnInit {
         observacao: norma.observacao,
         arquivoNorma: norma.localArquivoNormas
       });
+      this.normaExterna = norma.externa;
+    });
+  }
+
+  buscarArquivoPorId() {
+    this.normasService.buscarArquivoPorId(this.idNorma).pipe(
+      catchError((error) => {
+        this.toastrService.error(error);
+        return throwError(error);
+      })
+    ).subscribe((arquivo: any) => {
+      const file = new Blob([arquivo], {type: 'application/pdf'});
+      const fileURL = URL.createObjectURL(file);
+      window.open(fileURL, '_blank');
     });
   }
 

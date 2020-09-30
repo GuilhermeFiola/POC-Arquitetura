@@ -63,6 +63,19 @@ export class IndexComponent implements OnInit {
     });
   }
 
+  buscarArquivoPorId(idNorma) {
+    this.normasService.buscarArquivoPorId(idNorma).pipe(
+      catchError((error) => {
+        this.toastrService.error(error);
+        return throwError(error);
+      })
+    ).subscribe((arquivo: any) => {
+      const file = new Blob([arquivo], {type: 'application/pdf'});
+      const fileURL = URL.createObjectURL(file);
+      window.open(fileURL, '_blank');
+    });
+  }
+
   ehAnalista(): boolean {
     return this.usuario.papel === 'Analista';
   }

@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  gateway:
+    image: guilhermefiola.azurecr.io/gateway
+    container_name: gateway
+    build:
+      context: ./ApiGateway
+    ports:
+      - "5000:80"
+    restart: always
+    environment:
+      "ASPNETCORE_ENVIRONMENT": "Production"
+    links:
+      - seguranca
+      - normas
+    depends_on:
+      - seguranca
+      - normas  
+  normas:
+    image: guilhermefiola.azurecr.io/normas
+    container_name: normas
+    hostname: normas
+    build:
+      context: ./Normas.WebAPI
+    ports:
+      - "5100:80"
+    restart: always
+    environment:
+      "ASPNETCORE_ENVIRONMENT": "Production"
+      "PUBLIC_PORT": "5100"
+  seguranca:
+    image: guilhermefiola.azurecr.io/seguranca
+    container_name: seguranca
+    hostname: seguranca
+    build:
+      context: ./Seguranca.WebAPI
+    ports:
+      - "8000:80"
+    restart: always
+    environment:
+      "ASPNETCORE_ENVIRONMENT": "Production"
+      "PUBLIC_PORT": "8000"

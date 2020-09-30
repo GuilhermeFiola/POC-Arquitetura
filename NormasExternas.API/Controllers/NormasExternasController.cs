@@ -17,7 +17,7 @@ namespace NormasExternas.WebAPI.Controllers
 
         [HttpPost()]
         public async Task<IActionResult> PostNorma([FromServices]AdicionarNormaUseCase _casoUso,
-                                                   [FromForm] AdicionarNormaRequestDTO adicionarNormaDTO)
+                                                   [FromBody] AdicionarNormaRequestDTO adicionarNormaDTO)
         {
             return await _casoUso.Adicionar(adicionarNormaDTO);
         }

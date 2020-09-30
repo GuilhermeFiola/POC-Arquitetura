@@ -63,6 +63,12 @@ namespace Normas.WebAPI.Services
 
         }
 
+        public Stream RetornaStreamArquivo(string localArquivoInterno)
+        {
+            var fileStream = File.OpenRead(_hostEnvironment.WebRootPath + localArquivoInterno);
+            return fileStream;
+        }
+
         public string RetornaLinkArquivoNorma(string localArquivoInterno)
         {
             var request = _httpContext.Request;

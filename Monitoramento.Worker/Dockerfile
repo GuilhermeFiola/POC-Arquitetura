@@ -5,10 +5,10 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["Monitoramento.Worker/Monitoramento.Worker.csproj", "Monitoramento.Worker/"]
-RUN dotnet restore "Monitoramento.Worker/Monitoramento.Worker.csproj"
+COPY ["Monitoramento.Worker.csproj", "./"]
+RUN dotnet restore "./Monitoramento.Worker.csproj"
 COPY . .
-WORKDIR "/src/Monitoramento.Worker"
+WORKDIR "/src"
 RUN dotnet build "Monitoramento.Worker.csproj" -c Release -o /app/build
 
 FROM build AS publish

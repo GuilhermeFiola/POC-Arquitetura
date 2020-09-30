@@ -16,7 +16,7 @@ export class NormasService {
     ) { }
 
     buscarNormas(): Observable<Norma[]> {
-        return this.http.get(`${environment.apiNormas}/api/normas`)
+        return this.http.get(`${environment.apiUrl}/normas`)
             .pipe(
                 map((norma: Norma[]) => {
                     return norma;
@@ -24,15 +24,23 @@ export class NormasService {
     }
 
     buscarNormaPorId(idNorma: number): Observable<Norma> {
-        return this.http.get(`${environment.apiNormas}/api/normas/${idNorma}`)
+        return this.http.get(`${environment.apiUrl}/normas/${idNorma}`)
             .pipe(
                 map((norma: Norma) => {
                     return norma;
             }));
     }
 
+    buscarArquivoPorId(idNorma: number): Observable<any> {
+        return this.http.get(`${environment.apiUrl}/normas/${idNorma}/arquivo`, { headers: new HttpHeaders( {'Content-Type': 'application/octet-stream' }), responseType: 'blob'})
+            .pipe(
+                map((arquivo) => {
+                    return arquivo;
+            }));
+    }
+
     gravarNorma(novaNorma: FormData): Observable<Norma> {
-        return this.http.post(`${environment.apiNormas}/api/normas`, novaNorma)
+        return this.http.post(`${environment.apiUrl}/normas`, novaNorma)
             .pipe(
                 map((norma: Norma) => {
                     return norma;
@@ -40,7 +48,7 @@ export class NormasService {
     }
 
     atualizarNorma(atualizacaoNorma: FormData): Observable<Norma> {
-        return this.http.put(`${environment.apiNormas}/api/normas`, atualizacaoNorma)
+        return this.http.put(`${environment.apiUrl}/normas`, atualizacaoNorma)
             .pipe(
                 map((norma: Norma) => {
                     return norma;
@@ -48,7 +56,7 @@ export class NormasService {
     }
 
     excluirNorma(idNorma: number): Observable<Norma> {
-        return this.http.delete(`${environment.apiNormas}/api/normas/${idNorma}`)
+        return this.http.delete(`${environment.apiUrl}/normas/${idNorma}`)
             .pipe(
                 map((norma: Norma) => {
                     return norma;

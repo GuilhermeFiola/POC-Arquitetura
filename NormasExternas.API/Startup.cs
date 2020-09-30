@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using NormasExternas.WebAPI.Data;
 using NormasExternas.WebAPI.Helpers;
 using NormasExternas.WebAPI.Interfaces.Repositories;
-using NormasExternas.WebAPI.Interfaces.Services;
 using NormasExternas.WebAPI.Repositories;
-using NormasExternas.WebAPI.Services;
 using NormasExternas.WebAPI.UseCases.Normas;
+using System.Linq;
 
 namespace NormasExternas.API
 {
@@ -43,10 +43,6 @@ namespace NormasExternas.API
 
             #region DI Repositórios
             services.AddScoped<INormaRepository, NormaRepository>();
-            #endregion
-
-            #region DI Serviços
-            services.AddScoped<INormaService, NormaService>();
             #endregion
 
             #region DI Use Cases
@@ -90,6 +86,17 @@ namespace NormasExternas.API
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Normas Externas API V1");
             });
+
+            // Criação do banco de dados
+            if (env.IsProduction())
+            {
+                using var scope = app.ApplicationServices.CreateScope();
+                using var context = scope.ServiceProvider.GetService<ApiContext>();
+                if (context.Database.GetPendingMigrations().Any())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }

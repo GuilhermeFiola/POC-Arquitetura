@@ -14,7 +14,7 @@ export class OrgaoExpedidorService {
     ) { }
 
     buscarOrgaosExpedidores(): Observable<OrgaoExpedidor[]> {
-        return this.http.get(`${environment.apiNormas}/api/orgaoExpedidor`)
+        return this.http.get(`${environment.apiUrl}/orgaoExpedidor`)
             .pipe(
                 map((orgaoExpedidor: OrgaoExpedidor[]) => {
                     return orgaoExpedidor;
@@ -22,7 +22,7 @@ export class OrgaoExpedidorService {
     }
 
     buscarOrgaoExpedidorPorId(idOrgaoExpedidor: number): Observable<OrgaoExpedidor> {
-        return this.http.get(`${environment.apiNormas}/api/orgaoExpedidor/` + idOrgaoExpedidor)
+        return this.http.get(`${environment.apiUrl}/orgaoExpedidor/` + idOrgaoExpedidor)
             .pipe(
                 map((orgaoExpedidor: OrgaoExpedidor) => {
                     return orgaoExpedidor;
