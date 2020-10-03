@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Monitoramento.Worker.Interfaces;
+using Monitoramento.Worker.Services;
 
 namespace Monitoramento.Worker
 {
@@ -18,6 +16,7 @@ namespace Monitoramento.Worker
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddTransient<IEmailSender, EmailSender>();
                     services.AddHostedService<Worker>();
                 });
     }

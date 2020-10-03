@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { Norma } from '../../components/normas/models/norma';
+import { FiltroNormas } from 'src/app/components/normas/models/filtro-normas';
 
 @Injectable({ providedIn: 'root' })
 export class NormasService {
@@ -15,8 +16,14 @@ export class NormasService {
         private http: HttpClient
     ) { }
 
-    buscarNormas(): Observable<Norma[]> {
-        return this.http.get(`${environment.apiUrl}/normas`)
+    buscarNormas(filtroNormas: FiltroNormas): Observable<Norma[]> {
+        const data: any = { };
+        if (filtroNormas.codigoNorma) { data.CodigoNorma = filtroNormas.codigoNorma; }
+        if (filtroNormas.tipoDocumento) { data.TipoDocumento = filtroNormas.tipoDocumento; }
+        if (filtroNormas.orgaoExpedidor) { data.OrgaoExpedidor = filtroNormas.orgaoExpedidor; }
+        if (filtroNormas.dataPublicacao) { data.DataPublicacao = filtroNormas.dataPublicacao; }
+
+        return this.http.get(`${environment.apiUrl}/normas`, {params: data})
             .pipe(
                 map((norma: Norma[]) => {
                     return norma;

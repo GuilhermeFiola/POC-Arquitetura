@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Monitoramento.DTO.Normas;
+using Monitoramento.Worker.Interfaces;
 using Newtonsoft.Json;
 
 namespace Monitoramento.Worker
@@ -19,12 +20,15 @@ namespace Monitoramento.Worker
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<Worker> _logger;
+        private readonly IEmailSender _emailSender;
 
         public Worker(ILogger<Worker> logger,
-                      IConfiguration configuration)
+                      IConfiguration configuration,
+                      IEmailSender emailSender)
         {
             _configuration = configuration;
             _logger = logger;
+            _emailSender = emailSender;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -64,9 +68,12 @@ namespace Monitoramento.Worker
                             foreach (var norma in listaNormasExternas)
                             {
                                 HttpResponseMessage responseNormas = clientNormas.PostAsync("/normas/importar", new StringContent(JsonConvert.SerializeObject(norma), Encoding.UTF8, "application/json")).Result;
-
+                                
                                 if (responseNormas.StatusCode == HttpStatusCode.OK)
                                 {
+                                    responseBody = await responseNormasExternas.Content.ReadAsStringAsync();
+                                    var respostaImportacaoNorma = JsonConvert.DeserializeObject<List<NormasExternasDTO>>(responseBody);
+
                                     _logger.LogInformation("Norma {CodigoNorma} da base externa inserida no módulo de normas: {time}", norma.CodigoNorma, DateTimeOffset.Now);
                                 }
                             }

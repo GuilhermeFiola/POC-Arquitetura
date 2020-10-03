@@ -2,8 +2,56 @@
   <div class="card">
     <h1 class="text-center card-header">Cadastro de Normas</h1>
 
-    <a *ngIf="ehAnalista()" href="#" routerLink="/normas/Criacao" class="btn btn-success btn-criacao">Criar Norma</a>
-    
+    <div class="card-header">
+      <form [formGroup]="formGroup">
+        
+        
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label for="codigoNorma">Código da Norma</label>
+            <input type="text" 
+                class="form-control" 
+                formControlName="codigoNorma" 
+                id="codigoNorma" 
+                aria-describedby="codigoNorma" 
+                placeholder="Código da Norma">    
+          </div>
+          <div class="col-md-4">
+            <label for="tipoDocumento">Tipo Documento</label>
+            <select class="form-control" id="tipoDocumento" formControlName="tipoDocumento">
+                <option value=""></option>
+                <option *ngFor="let tipoDocumento of listaTiposDocumento" [ngValue]="tipoDocumento?.id">{{tipoDocumento?.descricao}}</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="orgaoExpedidor">Orgão Expedidor</label>
+            <select class="form-control" id="orgaoExpedidor" formControlName="orgaoExpedidor">
+              <option value=""></option>
+              <option *ngFor="let orgaoExpedidor of listaOrgaosExpedidores" [ngValue]="orgaoExpedidor?.id">{{orgaoExpedidor?.descricao}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-4">
+            <label for="dataPublicacao">Data Publicação</label>
+            <input type="date" 
+                class="form-control" 
+                formControlName="dataPublicacao" 
+                id="dataPublicacao" 
+                aria-describedby="dataPublicacao" 
+                placeholder="Data de Publicação">
+          </div>
+          
+          <div class="col-md-4">
+            <button class="btn btn-warning btn-criacao col-md-12" (click)="buscarNormas()">Pesquisar</button>  
+          </div>
+          <div class="col-md-4">
+            <a *ngIf="ehAnalista()" href="#" routerLink="/normas/Criacao" class="btn btn-success btn-criacao col-md-12">Criar Norma</a>
+          </div>
+        </div>
+      </form>
+    </div>
+
     <div class="table-responsive card-body">
       <table class="table table-bordered table-striped table-hover">
         <thead>

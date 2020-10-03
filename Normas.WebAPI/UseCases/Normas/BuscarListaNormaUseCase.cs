@@ -34,12 +34,7 @@ namespace Normas.WebAPI.UseCases.Normas
 
                 if(filtrosNormas.CodigoNorma != null)
                 {
-                    listaNormas = listaNormas.Where(w => w.CodigoNorma == filtrosNormas.CodigoNorma);
-                }
-
-                if (filtrosNormas.Descricao != null)
-                {
-                    listaNormas = listaNormas.Where(w => w.Descricao.Contains(filtrosNormas.Descricao));
+                    listaNormas = listaNormas.Where(w => w.CodigoNorma.Contains(filtrosNormas.CodigoNorma));
                 }
 
                 if (filtrosNormas.DataPublicacao != null)
