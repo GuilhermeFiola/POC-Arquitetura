@@ -101,7 +101,7 @@
         {
           "Name": "API Normas",
           "Version": "v1",
-          "Url": "http://localhost:5100/swagger/v1/swagger.json"
+          "Url": "http://normas:80/swagger/v1/swagger.json"
         }
       ]
     },
@@ -111,7 +111,7 @@
         {
           "Name": "API Seguranca",
           "Version": "v1",
-          "Url": "http://localhost:8000/swagger/v1/swagger.json"
+          "Url": "http://seguranca:80/swagger/v1/swagger.json"
         }
       ]
     }

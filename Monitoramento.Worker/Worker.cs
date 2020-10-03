@@ -41,63 +41,70 @@ namespace Monitoramento.Worker
 
             listaEmails.Add(_configuration.GetSection("EmailNotificacao").Value);
 
-            while (!stoppingToken.IsCancellationRequested)
+            try
             {
-                _logger.LogInformation("Iniciando processo de monitoramento de normas em: {time}", DateTimeOffset.Now);
-
-                using (var clientExterno = new HttpClient())
+                while (!stoppingToken.IsCancellationRequested)
                 {
-                    _logger.LogInformation("Obtendo normas do serviço externo em: {time}", DateTimeOffset.Now);
+                    _logger.LogInformation("Iniciando processo de monitoramento de normas em: {time}", DateTimeOffset.Now);
 
-                    clientExterno.BaseAddress = new Uri(urlBaseNormasExterna);
-                    clientExterno.DefaultRequestHeaders.Accept.Clear();
-                    clientExterno.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    
-                    HttpResponseMessage responseNormasExternas = clientExterno.GetAsync("/api/normasexternas").Result;
-
-                    if (responseNormasExternas.StatusCode == HttpStatusCode.OK)
+                    using (var clientExterno = new HttpClient())
                     {
-                        string responseBody = await responseNormasExternas.Content.ReadAsStringAsync();
-                        var listaNormasExternas = JsonConvert.DeserializeObject<List<NormasExternasDTO>>(responseBody);
+                        _logger.LogInformation("Obtendo normas do serviço externo em: {time}", DateTimeOffset.Now);
 
-                        _logger.LogInformation("Inserindo normas da base externa no módulo de normas: {time}", DateTimeOffset.Now);
+                        clientExterno.BaseAddress = new Uri(urlBaseNormasExterna);
+                        clientExterno.DefaultRequestHeaders.Accept.Clear();
+                        clientExterno.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                        using (var clientNormas = new HttpClient())
+                        HttpResponseMessage responseNormasExternas = clientExterno.GetAsync("/api/normasexternas").Result;
+
+                        if (responseNormasExternas.StatusCode == HttpStatusCode.OK)
                         {
+                            string responseBody = await responseNormasExternas.Content.ReadAsStringAsync();
+                            var listaNormasExternas = JsonConvert.DeserializeObject<List<NormasExternasDTO>>(responseBody);
 
-                            clientNormas.BaseAddress = new Uri(urlModuloNormas);
-                            clientNormas.DefaultRequestHeaders.Accept.Clear();
-                            clientNormas.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            _logger.LogInformation("Inserindo normas da base externa no módulo de normas: {time}", DateTimeOffset.Now);
 
-                            foreach (var norma in listaNormasExternas)
+                            using (var clientNormas = new HttpClient())
                             {
-                                HttpResponseMessage responseNormas = clientNormas.PostAsync("/normas/importar", new StringContent(JsonConvert.SerializeObject(norma), Encoding.UTF8, "application/json")).Result;
-                                
-                                if (responseNormas.StatusCode == HttpStatusCode.OK)
+
+                                clientNormas.BaseAddress = new Uri(urlModuloNormas);
+                                clientNormas.DefaultRequestHeaders.Accept.Clear();
+                                clientNormas.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                                foreach (var norma in listaNormasExternas)
                                 {
-                                    responseBody = await responseNormasExternas.Content.ReadAsStringAsync();
-                                    var respostaImportacaoNorma = JsonConvert.DeserializeObject<List<NormaImportadaDTO>>(responseBody).FirstOrDefault();
+                                    HttpResponseMessage responseNormas = clientNormas.PostAsync("/normas/importar", new StringContent(JsonConvert.SerializeObject(norma), Encoding.UTF8, "application/json")).Result;
 
-                                    _logger.LogInformation("Norma {CodigoNorma} da base externa inserida no módulo de normas: {time}", respostaImportacaoNorma.CodigoNorma, DateTimeOffset.Now);
+                                    if (responseNormas.StatusCode == HttpStatusCode.OK)
+                                    {
+                                        responseBody = await responseNormasExternas.Content.ReadAsStringAsync();
+                                        var respostaImportacaoNorma = JsonConvert.DeserializeObject<List<NormaImportadaDTO>>(responseBody).FirstOrDefault();
 
-                                    var mensagemEmail =
-                                        string.Format("Realizada a importação da norma com o código {0}\n" +
-                                        ", descrição: {1}\n" +
-                                        ", data de publicação: {2}\n" +
-                                        "e local arquivo: {3}",
-                                        respostaImportacaoNorma.CodigoNorma, respostaImportacaoNorma.Descricao, 
-                                        respostaImportacaoNorma.DataPublicacao, respostaImportacaoNorma.LocalArquivoNormas);
+                                        _logger.LogInformation("Norma {CodigoNorma} da base externa inserida no módulo de normas: {time}", respostaImportacaoNorma.CodigoNorma, DateTimeOffset.Now);
 
-                                    await _emailSender.SendEmailAsync(listaEmails, $"Importação da norma {respostaImportacaoNorma.CodigoNorma}", mensagemEmail);
+                                        var mensagemEmail =
+                                            string.Format("Realizada a importação da norma com o código {0}\n" +
+                                            ", descrição: {1}\n" +
+                                            ", data de publicação: {2}\n" +
+                                            "e local arquivo: {3}",
+                                            respostaImportacaoNorma.CodigoNorma, respostaImportacaoNorma.Descricao,
+                                            respostaImportacaoNorma.DataPublicacao, respostaImportacaoNorma.LocalArquivoNormas);
+
+                                        await _emailSender.SendEmailAsync(listaEmails, $"Importação da norma {respostaImportacaoNorma.CodigoNorma}", mensagemEmail);
+                                    }
                                 }
                             }
                         }
                     }
                 }
-
-                _logger.LogInformation("Concluindo verificacao de normas em: {time}", DateTimeOffset.Now);
-                await Task.Delay(intervaloExecucao, stoppingToken);
+            } 
+            catch(Exception ex)
+            {
+                _logger.LogInformation("Ocorreu um erro no processo de importação de normas em: {time}", DateTimeOffset.Now);
             }
+
+            _logger.LogInformation("Concluindo verificacao de normas em: {time}", DateTimeOffset.Now);
+            await Task.Delay(intervaloExecucao, stoppingToken);
         }
     }
 }

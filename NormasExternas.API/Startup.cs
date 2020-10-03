@@ -48,6 +48,7 @@ namespace NormasExternas.API
             #region DI Use Cases
             services.AddScoped<BuscarListaNormaUseCase>();
             services.AddScoped<AdicionarNormaUseCase>();
+            services.AddScoped<ExcluirNormaUseCase>();
             #endregion
 
             #region DI Mappers

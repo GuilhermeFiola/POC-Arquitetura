@@ -54,7 +54,6 @@ namespace Normas.WebAPI.Controllers
         }
 
         [HttpGet("{idNorma}/arquivo")]
-        [Authorize(Roles = "Analista")]
         public async Task<IActionResult> GetArquivoNorma([FromServices] BuscarArquivoUseCase _casoUso,
                                                          [FromRoute][Required] int idNorma)
         {

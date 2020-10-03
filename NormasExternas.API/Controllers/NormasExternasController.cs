@@ -16,10 +16,17 @@ namespace NormasExternas.WebAPI.Controllers
         }
 
         [HttpPost()]
-        public async Task<IActionResult> PostNorma([FromServices]AdicionarNormaUseCase _casoUso,
+        public async Task<IActionResult> PostNorma([FromServices] AdicionarNormaUseCase _casoUso,
                                                    [FromBody] AdicionarNormaRequestDTO adicionarNormaDTO)
         {
             return await _casoUso.Adicionar(adicionarNormaDTO);
+        }
+
+        [HttpDelete("{idNorma}")]
+        public async Task<IActionResult> DeleteNorma([FromServices] ExcluirNormaUseCase _casoUso,
+                                                     [FromRoute] int idNorma)
+        {
+            return await _casoUso.Excluir(idNorma);
         }
     }
 }

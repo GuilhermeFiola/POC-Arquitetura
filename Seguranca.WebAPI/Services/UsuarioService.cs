@@ -15,8 +15,8 @@ namespace Seguranca.WebAPI.Services
     {
         private List<Usuario> _usuarios = new List<Usuario>
         {
-            new Usuario { Id = 1, Nome = "João", Sobrenome = "Pedro", Papel = "Usuario", Login = "usuario", Senha = "usuario" },
-            new Usuario { Id = 1, Nome = "Maria", Sobrenome = "Lima", Papel = "Analista", Login = "analistaqa", Senha = "qa" }
+            new Usuario { Id = 1, Nome = "João", Sobrenome = "Pedro", Papel = "Colaborador", Login = "colaborador", Senha = "colaborador" },
+            new Usuario { Id = 2, Nome = "Maria", Sobrenome = "Lima", Papel = "Analista", Login = "analistaqa", Senha = "analistaqa" }
         };
 
         public AuthResponseDTO Autenticar(AuthRequestDTO authRequestDTO)
