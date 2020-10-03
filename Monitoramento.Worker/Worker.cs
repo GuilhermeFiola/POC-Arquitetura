@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Monitoramento.DTO.Normas;
+using Monitoramento.Worker.DTO.Normas;
 using Monitoramento.Worker.Interfaces;
 using Newtonsoft.Json;
 
@@ -33,9 +34,12 @@ namespace Monitoramento.Worker
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            var listaEmails = new List<string>();
             var urlBaseNormasExterna = _configuration.GetSection("urlBaseNormasExterna").Value;
             var urlModuloNormas = _configuration.GetSection("urlModuloNormas").Value;
             var intervaloExecucao = int.Parse(_configuration.GetSection("intervalo").Value);
+
+            listaEmails.Add(_configuration.GetSection("EmailNotificacao").Value);
 
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -72,9 +76,19 @@ namespace Monitoramento.Worker
                                 if (responseNormas.StatusCode == HttpStatusCode.OK)
                                 {
                                     responseBody = await responseNormasExternas.Content.ReadAsStringAsync();
-                                    var respostaImportacaoNorma = JsonConvert.DeserializeObject<List<NormasExternasDTO>>(responseBody);
+                                    var respostaImportacaoNorma = JsonConvert.DeserializeObject<List<NormaImportadaDTO>>(responseBody).FirstOrDefault();
 
-                                    _logger.LogInformation("Norma {CodigoNorma} da base externa inserida no módulo de normas: {time}", norma.CodigoNorma, DateTimeOffset.Now);
+                                    _logger.LogInformation("Norma {CodigoNorma} da base externa inserida no módulo de normas: {time}", respostaImportacaoNorma.CodigoNorma, DateTimeOffset.Now);
+
+                                    var mensagemEmail =
+                                        string.Format("Realizada a importação da norma com o código {0}\n" +
+                                        ", descrição: {1}\n" +
+                                        ", data de publicação: {2}\n" +
+                                        "e local arquivo: {3}",
+                                        respostaImportacaoNorma.CodigoNorma, respostaImportacaoNorma.Descricao, 
+                                        respostaImportacaoNorma.DataPublicacao, respostaImportacaoNorma.LocalArquivoNormas);
+
+                                    await _emailSender.SendEmailAsync(listaEmails, $"Importação da norma {respostaImportacaoNorma.CodigoNorma}", mensagemEmail);
                                 }
                             }
                         }
