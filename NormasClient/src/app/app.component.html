@@ -8,13 +8,42 @@
   </button>
 
   <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-3">
       <li class="nav-item dropdown active" ngbDropdown>
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1" ngbDropdownToggle>Cadastros</a>
         <div class="dropdown-menu dropdown-primary" ngbDropdownMenu>
           <a class="dropdown-item" href="/normas">Normas</a>
           <a class="dropdown-item" href="/tipodocumento">Tipos Documento</a>
           <a class="dropdown-item" href="/orgaoexpedidor">Orgãos Expedidores</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-3">
+      <li class="nav-item dropdown active" ngbDropdown>
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1" ngbDropdownToggle>Plano de Ações</a>
+        <div class="dropdown-menu dropdown-primary" ngbDropdownMenu>
+          <a class="dropdown-item" href="#">Projetos</a>
+          <a class="dropdown-item" href="#">Planos</a> 
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-3">
+      <li class="nav-item dropdown active" ngbDropdown>
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1" ngbDropdownToggle>Dashboards</a>
+        <div class="dropdown-menu dropdown-primary" ngbDropdownMenu>
+          <a class="dropdown-item" href="#">Normas</a>
+          <a class="dropdown-item" href="#">Projetos</a>
+          <a class="dropdown-item" href="#">Planos</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-3">
+      <li class="nav-item dropdown active" ngbDropdown>
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1" ngbDropdownToggle>Relatórios</a>
+        <div class="dropdown-menu dropdown-primary" ngbDropdownMenu>
+          <a class="dropdown-item" href="#">Normas</a>
+          <a class="dropdown-item" href="#">Projetos</a>
+          <a class="dropdown-item" href="#">Planos</a>
         </div>
       </li>
     </ul>
