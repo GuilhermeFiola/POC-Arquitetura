@@ -20,12 +20,14 @@ const routes: Routes = [
     {
         path: 'Criacao',
         component: CriacaoComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: {roles: ['analista']}
     },
     {
         path: 'Atualizacao/:id',
         component: AtualizacaoComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: {roles: ['analista']}
     },
     {
         path: 'Visualizacao/:id',
