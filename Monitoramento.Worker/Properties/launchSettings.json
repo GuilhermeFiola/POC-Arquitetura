@@ -3,7 +3,7 @@
     "Monitoramento.Worker": {
       "commandName": "Project",
       "environmentVariables": {
-        "SENDEMAILDEMO_ENVIRONMENT_SENDGRID_KEY": "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",
+        
         "DOTNET_ENVIRONMENT": "Development"
       }
     },
