@@ -41,9 +41,10 @@ namespace Monitoramento.Worker
 
             listaEmails.Add(_configuration.GetSection("EmailNotificacao").Value);
 
-            try
+            
+            while (!stoppingToken.IsCancellationRequested)
             {
-                while (!stoppingToken.IsCancellationRequested)
+                try
                 {
                     _logger.LogInformation("Iniciando processo de monitoramento de normas em: {time}", DateTimeOffset.Now);
 
@@ -97,14 +98,14 @@ namespace Monitoramento.Worker
                         }
                     }
                 }
-            } 
-            catch(Exception ex)
-            {
-                _logger.LogInformation("Ocorreu um erro no processo de importação de normas em: {time}", DateTimeOffset.Now);
-            }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ocorreu um erro no processo de importação de normas em: {time}", DateTimeOffset.Now);
+                }
 
-            _logger.LogInformation("Concluindo verificacao de normas em: {time}", DateTimeOffset.Now);
-            await Task.Delay(intervaloExecucao, stoppingToken);
+                _logger.LogInformation("Concluindo verificacao de normas em: {time}", DateTimeOffset.Now);
+                await Task.Delay(intervaloExecucao, stoppingToken);
+            } 
         }
     }
 }
